@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type User = {
   id: number;
@@ -13,42 +13,31 @@ type User = {
   vetting: string;
 };
 
-const sampleData: User[] = [
-  {
-    id: 1,
-    firstName: "Juan",
-    lastName: "Dela Cruz",
-    email: "juan@example.com",
-    location: "Manila",
-    social: "@juandelacruz",
-    background: "Web Developer",
-    website: "https://juan.dev",
-    vetting: "Initial Review"
-  },
-  {
-    id: 2,
-    firstName: "Maria",
-    lastName: "Santos",
-    email: "maria@example.com",
-    location: "Cebu",
-    social: "@mariasantos",
-    background: "UX Designer",
-    website: "https://maria.design",
-    vetting: "Interview Stage"
-  }
-];
-
 export default function Home() {
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+
+const [users, setUsers] = useState<any[]>([]);
+const [selectedUser, setSelectedUser] = useState<any>(null);
+
+useEffect(() => {
+  fetch("https://sheetdb.io/api/v1/axmaxulx9jy0s")
+    .then(res => res.json())
+    .then(data => {
+      if (Array.isArray(data)) {
+        setUsers(data);
+      } else {
+        setUsers([]);
+      }
+    });
+}, []);
 
   return (
     <div className="p-6 max-w-3xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Waitlist Members</h1>
 
       <div className="space-y-3">
-        {sampleData.map((user) => (
+        {users.map((user, index) => (
           <div
-            key={user.id}
+            key={index}
             className="p-4 border rounded cursor-pointer"
             onClick={() => setSelectedUser(user)}
           >
