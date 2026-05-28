@@ -136,15 +136,7 @@ borderLeft: `6px solid ${
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center">
           <div className="bg-white p-6 rounded-xl shadow-xl w-96">
             
-<h2
-  style={{
-    color: "#1C132D",
-    fontWeight: "700",
-    fontSize: "20px"
-  }}
->
-  {selectedUser.firstName} {selectedUser.lastName}
-</h2>
+<h2 className="text-xl font-bold mb-3 text-center" style={{ color: "#1C132D" }}>
 
             
 
