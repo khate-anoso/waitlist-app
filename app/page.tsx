@@ -17,7 +17,7 @@ export default function Home() {
 
 const [users, setUsers] = useState<any[]>([]);
 const [selectedUser, setSelectedUser] = useState<any>(null);
-
+const [search, setSearch] = useState("");
 useEffect(() => {
   fetch("https://sheetdb.io/api/v1/axmaxulx9jy0s")
     .then(res => res.json())
@@ -29,13 +29,25 @@ useEffect(() => {
       }
     });
 }, []);
-
+const filteredUsers = users.filter((user) =>
+  `${user.firstName} ${user.lastName}`
+    .toLowerCase()
+    .includes(search.toLowerCase())
+);
+``
   return (
     <div className="p-6 max-w-3xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Waitlist Members</h1>
-
+<input
+  type="text"
+  placeholder="Search name..."
+  value={search}
+  onChange={(e) => setSearch(e.target.value)}
+  className="p-2 border rounded w-full mb-4"
+/>
       <div className="space-y-3">
-        {users.map((user, index) => (
+        {filteredUsers.map((user, index) => (
+``
           <div
             key={index}
             className="p-4 border rounded cursor-pointer"
