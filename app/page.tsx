@@ -81,7 +81,7 @@ fetch("https://sheetdb.io/api/v1/axmaxulx9jy0s", {
 };
 
 // UPDATE STATUS
-const updateStatus = async (user, status) => {
+const updateStatus = async (user: User, status: string) => {
   await fetch(`https://sheetdb.io/api/v1/axmaxulx9jy0s/id/${user.id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
