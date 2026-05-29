@@ -112,7 +112,7 @@ const [newUser, setNewUser] = useState({
   nextStep: ""
 });
 
-const scrollToLetter = (letter) => {
+const scrollToLetter = (letter: string) => {
   setActiveFilterLetter(letter);
 
   const el = letterRefs.current[letter];
