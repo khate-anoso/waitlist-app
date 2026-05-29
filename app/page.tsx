@@ -92,7 +92,7 @@ const updateStatus = async (user: User, status: string) => {
 };
 
 // DELETE USER
-const deleteUser = async (user) => {
+const deleteUser = async (user: User) => {
   console.log("Deleting user:", user.email);
 
   const res = await fetch(`https://sheetdb.io/api/v1/axmaxulx9jy0s/email/${user.email}`, {
