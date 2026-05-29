@@ -245,13 +245,13 @@ onClick={() => {
 
 <div style={{
   flex: 1,
-  padding: "20px 60px 20px 20px",
+  padding: "20px",
   background: "#F3ECE2"
 }}>
 
 
 
-      <div style={{ maxWidth: "600px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "600px", width: "100%", margin: "0 auto" }}>
 
         <h1 style={{ textAlign: "center", color: "#1C132D" }}>
           Waitlist Dashboard
@@ -288,11 +288,12 @@ onClick={() => {
         </div>
 
         {/* ADD USER FORM */}
-        <div style={{ marginTop: "15px", background: "#fff", padding: "10px", borderRadius: "10px", display: "flex", gap: "10px", alignItems: "center"}}>
+        <div style={{ marginTop: "15px", background: "#fff", padding: "10px", borderRadius: "10px", display: "flex", gap: "10px", alignItems: "center",flexWrap: "wrap"}}>
           
 <input
   style={{
     padding: "8px",
+    flex: "1 1 120px",
     borderRadius: "6px",
     border: "1px solid #ccc",
     outline: "none",
@@ -316,6 +317,7 @@ onClick={() => {
 <input
   style={{
     padding: "8px",
+    flex: "1 1 120px",
     borderRadius: "6px",
     border: "1px solid #ccc",
     outline: "none",
@@ -339,6 +341,7 @@ onClick={() => {
 <input
   style={{
     padding: "8px",
+    flex: "1 1 120px",
     borderRadius: "6px",
     border: "1px solid #ccc",
     outline: "none",
@@ -473,7 +476,7 @@ maxHeight: "90vh",
       </h2>
 
       {/* EMAIL */}
-      <p style={{ color: "#666", marginBottom: "10px" }}>
+      <p style={{ color: "#333", marginBottom: "10px" }}>
         {selectedUser.email}
       </p>
 
