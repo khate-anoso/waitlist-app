@@ -23,7 +23,7 @@ const [search, setSearch] = useState("");
 const [isEditing, setIsEditing] = useState(false);
 const [editData, setEditData] = useState<any>({});
 const [activeFilterLetter, setActiveFilterLetter] = useState("All");
-const letterRefs = useRef({});
+const letterRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 useEffect(() => {
   const fetchData = () => {
     fetch("https://sheetdb.io/api/v1/axmaxulx9jy0s", {
