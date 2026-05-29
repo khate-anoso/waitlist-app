@@ -507,13 +507,7 @@ maxHeight: "90vh",
     fontSize: "13px"
   }}
   
-style={{
-    padding: "8px",
-    borderRadius: "6px",
-    border: "1px solid #ccc",
-    outline: "none",
-    fontSize: "13px"
-  }}
+
   onFocus={(e) => e.target.style.border = "1px solid #8C84D9"}
   onBlur={(e) => e.target.style.border = "1px solid #ccc"}
   value={editData.firstName || ""}
@@ -542,13 +536,7 @@ style={{
     fontSize: "13px"
   }}
   
-style={{
-    padding: "8px",
-    borderRadius: "6px",
-    border: "1px solid #ccc",
-    outline: "none",
-    fontSize: "13px"
-  }}
+
   onFocus={(e) => e.target.style.border = "1px solid #8C84D9"}
   onBlur={(e) => e.target.style.border = "1px solid #ccc"}
   value={editData.lastName || ""}
@@ -577,13 +565,7 @@ style={{
     fontSize: "13px"
   }}
   
-style={{
-    padding: "8px",
-    borderRadius: "6px",
-    border: "1px solid #ccc",
-    outline: "none",
-    fontSize: "13px"
-  }}
+
   onFocus={(e) => e.target.style.border = "1px solid #8C84D9"}
   onBlur={(e) => e.target.style.border = "1px solid #ccc"}
   value={editData.email || ""}
@@ -612,13 +594,7 @@ style={{
     fontSize: "13px"
   }}
   
-style={{
-    padding: "8px",
-    borderRadius: "6px",
-    border: "1px solid #ccc",
-    outline: "none",
-    fontSize: "13px"
-  }}
+
   onFocus={(e) => e.target.style.border = "1px solid #8C84D9"}
   onBlur={(e) => e.target.style.border = "1px solid #ccc"}
   value={editData.location || ""}
@@ -647,13 +623,7 @@ style={{
     fontSize: "13px"
   }}
   
-style={{
-    padding: "8px",
-    borderRadius: "6px",
-    border: "1px solid #ccc",
-    outline: "none",
-    fontSize: "13px"
-  }}
+
   onFocus={(e) => e.target.style.border = "1px solid #8C84D9"}
   onBlur={(e) => e.target.style.border = "1px solid #ccc"}
   value={editData.social || ""}
@@ -682,13 +652,7 @@ style={{
     fontSize: "13px"
   }}
   
-style={{
-    padding: "8px",
-    borderRadius: "6px",
-    border: "1px solid #ccc",
-    outline: "none",
-    fontSize: "13px"
-  }}
+
   onFocus={(e) => e.target.style.border = "1px solid #8C84D9"}
   onBlur={(e) => e.target.style.border = "1px solid #ccc"}
   value={editData.background || ""}
@@ -717,13 +681,7 @@ style={{
     fontSize: "13px"
   }}
   
-style={{
-    padding: "8px",
-    borderRadius: "6px",
-    border: "1px solid #ccc",
-    outline: "none",
-    fontSize: "13px"
-  }}
+
   onFocus={(e) => e.target.style.border = "1px solid #8C84D9"}
   onBlur={(e) => e.target.style.border = "1px solid #ccc"}
   value={editData.website || ""}
@@ -752,13 +710,7 @@ style={{
     fontSize: "13px"
   }}
   
-style={{
-    padding: "8px",
-    borderRadius: "6px",
-    border: "1px solid #ccc",
-    outline: "none",
-    fontSize: "13px"
-  }}
+
   onFocus={(e) => e.target.style.border = "1px solid #8C84D9"}
   onBlur={(e) => e.target.style.border = "1px solid #ccc"}
   value={editData.nextStep || ""}
