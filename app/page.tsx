@@ -27,7 +27,7 @@ const letterRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 useEffect(() => {
   const fetchData = () => {
     fetch("https://sheetdb.io/api/v1/axmaxulx9jy0s", {
-      cache: "no-store"   // ✅ force fresh data
+      cache: "no-store"   
     })
       .then(res => res.json())
       .then(data => {
@@ -42,7 +42,7 @@ useEffect(() => {
   fetchData();
 
 }, []);
-``
+
 
 const [activeFilter, setActiveFilter] = useState("All");
 
@@ -188,7 +188,6 @@ return (
   right: "12px",             
   top: "50%",      
   transform: "translateY(-50%) scale(0.85)",           
-  transform: "translateY(-50%)",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -378,7 +377,7 @@ onMouseEnter={(e) =>
 
 
 style={{
-  flex: "1 1 100%", ✅ ADD THIS
+  flex: "1 1 100%",
   background: "#EF5D41",
   color: "#fff",
   padding: "10px",
@@ -388,7 +387,7 @@ style={{
 }}
 
 >
-            ➕
+            ADD USER
           </button>
         </div>
 
