@@ -185,8 +185,9 @@ return (
   
 <div style={{
   position: "fixed",        
-  right: "5px",             
-  top: "50%",                 
+  right: "12px",             
+  top: "50%",      
+  transform: "translateY(-50%) scale(0.85)",           
   transform: "translateY(-50%)",
   display: "flex",
   flexDirection: "column",
@@ -293,7 +294,7 @@ onClick={() => {
 <input
   style={{
     padding: "8px",
-    flex: "1 1 120px",
+    flex: "1 1 45%",
     borderRadius: "6px",
     border: "1px solid #ccc",
     outline: "none",
@@ -317,7 +318,7 @@ onClick={() => {
 <input
   style={{
     padding: "8px",
-    flex: "1 1 120px",
+    flex: "1 1 45%",
     borderRadius: "6px",
     border: "1px solid #ccc",
     outline: "none",
@@ -341,7 +342,7 @@ onClick={() => {
 <input
   style={{
     padding: "8px",
-    flex: "1 1 120px",
+    flex: "1 1 100%",
     borderRadius: "6px",
     border: "1px solid #ccc",
     outline: "none",
@@ -375,15 +376,17 @@ onMouseEnter={(e) =>
           
 
 
+
 style={{
-    background: "#EF5D41",
-    color: "#fff",
-    padding: "8px 12px",
-    borderRadius: "8px",
-    border: "none",
-    cursor: "pointer",
-    whiteSpace: "nowrap"
-  }}
+  flex: "1 1 100%", ✅ ADD THIS
+  background: "#EF5D41",
+  color: "#fff",
+  padding: "10px",
+  borderRadius: "8px",
+  border: "none",
+  cursor: "pointer"
+}}
+
 >
             ➕
           </button>
