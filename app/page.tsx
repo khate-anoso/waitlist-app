@@ -264,6 +264,7 @@ onClick={() => {
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search..."
             style={{
+              color: "#1C132D",
               width: "100%",
               padding: "10px",
               border: "2px solid #8C84D9",
@@ -292,6 +293,7 @@ onClick={() => {
           
 <input
   style={{
+    color: "#1C132D",
     padding: "8px",
     flex: "1 1 45%",
     borderRadius: "6px",
@@ -316,6 +318,7 @@ onClick={() => {
           
 <input
   style={{
+    color: "#1C132D",
     padding: "8px",
     flex: "1 1 45%",
     borderRadius: "6px",
@@ -340,6 +343,7 @@ onClick={() => {
           
 <input
   style={{
+    color: "#1C132D",
     padding: "8px",
     flex: "1 1 100%",
     borderRadius: "6px",
