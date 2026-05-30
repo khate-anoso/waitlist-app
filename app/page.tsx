@@ -391,7 +391,7 @@ style={{
 }}
 
 >
-            ADD USER
+            ADD
           </button>
         </div>
 
