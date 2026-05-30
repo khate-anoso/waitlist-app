@@ -415,6 +415,7 @@ onClick={() => {
               marginTop: "10px",
               padding: "12px",
               borderRadius: "10px",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
               borderLeft: `6px solid ${
                 user.nextStep === "Approved"
                   ? "#66C6C4"
@@ -424,18 +425,24 @@ onClick={() => {
               }`
             }}
           >
-            <b>
+            
+<b style={{ color: "#1C132D" }}>
   {index + 1}. {user.firstName} {user.lastName}
 </b>
 
 
 
-            <div style={{ fontSize: "12px" }}>{user.location}</div>
+
+            
+<div style={{ fontSize: "12px", color: "#333" }}>
+  {user.location}
+</div>
+
           </div>
         ))}
 
 {filteredUsers.length === 0 && (
-  <p style={{ marginTop: "20px", textAlign: "center", color: "#888" }}>
+  <p style={{ marginTop: "20px", textAlign: "center", color: "#444" }}>
     No users found
   </p>
 )}
