@@ -60,7 +60,12 @@ const events = items.map((item: any) => {
     (col: any) => col.id === "date_mm3a5hvm"
   );
 
-  const date = dateColumn?.text;
+let date = dateColumn?.text;
+
+if (!date && dateColumn?.value) {
+  const parsed = JSON.parse(dateColumn.value);
+  date = parsed?.date;
+}
 
   return {
     title: item.name,
