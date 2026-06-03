@@ -25,6 +25,13 @@ const [mondayItems, setMondayItems] = useState<any[]>([]);
 const [editData, setEditData] = useState<any>({});
 const [activeFilterLetter, setActiveFilterLetter] = useState("All");
 const letterRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+const [calendarEvents, setCalendarEvents] = useState<any[]>([
+  { title: "Interview Tasha", date: "2026-06-05" },
+  { title: "Interview Tonara", date: "2026-06-10" },
+  { title: "Interview Trell", date: "2026-06-15" }
+]);
+
 useEffect(() => {
   const fetchData = () => {
     fetch("https://sheetdb.io/api/v1/axmaxulx9jy0s", {
@@ -274,6 +281,25 @@ onClick={() => {
         </h1>
 <div style={{ marginTop: "20px" }}>
   <h2 style={{ color: "#1C132D" }}>Monday Board</h2>
+
+<div style={{ marginTop: "30px" }}>
+  <h2 style={{ color: "#1C132D" }}>📅 Interview Calendar</h2>
+
+  {calendarEvents.map((event, index) => (
+    <div key={index} style={{
+      background: "#fff",
+      padding: "10px",
+      marginTop: "8px",
+      borderRadius: "8px",
+      borderLeft: "4px solid #8C84D9",
+      boxShadow: "0 2px 6px rgba(0,0,0,0.1)"
+    }}>
+      <b>{event.date}</b>
+      <div>{event.title}</div>
+    </div>
+  ))}
+</div>
+
 
   {mondayItems.map((item, index) => (
     <div key={index} style={{
