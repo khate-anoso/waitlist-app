@@ -36,16 +36,21 @@ export async function POST(req: Request) {
   const { name, date } = body;
 
   const query = `
-    mutation {
-      create_item(
-        board_id: 18412930770,
-        item_name: "${name}",
-        column_values: "{\"date_mm3a5hvm\": {\"date\": \"${date}\"}}"
-      ) {
-        id
-      }
+  mutation {
+    create_item(
+      board_id: 18412930770,
+      item_name: "${name}",
+      column_values: "${JSON.stringify({
+        date_mm3a5hvm: {
+          date: date
+        }
+      }).replace(/"/g, '\\"')}"
+    ) {
+      id
     }
-  `;
+  }
+`;
+
 
   const res = await fetch("https://api.monday.com/v2", {
     method: "POST",
@@ -57,6 +62,6 @@ export async function POST(req: Request) {
   });
 
   const data = await res.json();
-
+console.log("MONDAY RESPONSE:", data);
   return Response.json(data);
 }
