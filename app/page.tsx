@@ -66,6 +66,8 @@ if (!date && dateColumn?.value) {
   const parsed = JSON.parse(dateColumn.value);
   date = parsed?.date;
 }
+ 
+
 
   return {
     title: item.name,
