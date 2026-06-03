@@ -319,8 +319,8 @@ onClick={() => {
     const day = dayIndex + 1;
 
     const eventsForDay = calendarEvents.filter(event =>
-      new Date(event.date).getDate() === day
-    );
+  parseInt(event.date.split("-")[2]) === day
+);
 
     return (
   <div
@@ -442,7 +442,7 @@ onClick={async () => {
 </button>
 
     {calendarEvents
-      .filter(event => new Date(event.date).getDate() === selectedDay)
+      .filter(event => parseInt(event.date.split("-")[2]) === selectedDay)
       .map((event, index) => (
         <div key={index} style={{ marginTop: "5px" }}>
           {event.title}
@@ -450,7 +450,7 @@ onClick={async () => {
       ))}
 
     {calendarEvents.filter(event =>
-      new Date(event.date).getDate() === selectedDay
+      .filter(event => parseInt(event.date.split("-")[2]) === selectedDay)
     ).length === 0 && <p>No events</p>}
   </div>
 )}
