@@ -27,6 +27,7 @@ const [activeFilterLetter, setActiveFilterLetter] = useState("All");
 const letterRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
 const [calendarEvents, setCalendarEvents] = useState<any[]>([
+const [selectedDay, setSelectedDay] = useState<number | null>(null); 
   { title: "Interview Tasha", date: "2026-06-05" },
   { title: "Interview Tonara", date: "2026-06-10" },
   { title: "Interview Trell", date: "2026-06-15" }
@@ -300,17 +301,21 @@ onClick={() => {
     );
 
     return (
-      <div
-        key={day}
-        style={{
-          background: "#fff",
-          minHeight: "80px",
-          padding: "5px",
-          borderRadius: "8px",
-          boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-          fontSize: "12px"
-        }}
-      >
+  <div
+    key={day}
+    onClick={() => setSelectedDay(day)}
+    style={{
+      background: "#fff",
+      minHeight: "80px",
+      padding: "5px",
+      borderRadius: "8px",
+      boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+      fontSize: "12px",
+      cursor: "pointer",
+      border: selectedDay === day ? "2px solid #EF5D41" : "none"
+    }}
+  >
+
         <div style={{ fontWeight: "bold" }}>{day}</div>
 
         {eventsForDay.map((event, i) => (
@@ -333,6 +338,29 @@ onClick={() => {
   })}
 </div>
 </div>
+{selectedDay && (
+  <div style={{
+    marginTop: "20px",
+    background: "#fff",
+    padding: "15px",
+    borderRadius: "10px",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.2)"
+  }}>
+    <h3>Events on Day {selectedDay}</h3>
+
+    {calendarEvents
+      .filter(event => new Date(event.date).getDate() === selectedDay)
+      .map((event, index) => (
+        <div key={index} style={{ marginTop: "5px" }}>
+          {event.title}
+        </div>
+      ))}
+
+    {calendarEvents.filter(event =>
+      new Date(event.date).getDate() === selectedDay
+    ).length === 0 && <p>No events</p>}
+  </div>
+)}
 
 
   {mondayItems.map((item, index) => (
