@@ -28,6 +28,7 @@ const letterRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
 const [calendarEvents, setCalendarEvents] = useState<any[]>([]);
 const [selectedDay, setSelectedDay] = useState<number | null>(null); 
+const [newEventTitle, setNewEventTitle] = useState("");
 useEffect(() => {
   const fetchData = () => {
     fetch("https://sheetdb.io/api/v1/axmaxulx9jy0s", {
@@ -366,6 +367,45 @@ onClick={() => {
     boxShadow: "0 2px 8px rgba(0,0,0,0.2)"
   }}>
     <h3>Events on Day {selectedDay}</h3>
+
+    <input
+  type="text"
+  placeholder="Add interview..."
+  value={newEventTitle}
+  onChange={(e) => setNewEventTitle(e.target.value)}
+  style={{
+    width: "100%",
+    padding: "8px",
+    marginTop: "10px",
+    borderRadius: "6px",
+    border: "1px solid #ccc"
+  }}
+/>
+
+<button
+  onClick={() => {
+    if (!newEventTitle) return;
+
+    const newEvent = {
+      title: newEventTitle,
+      date: `2026-06-${selectedDay.toString().padStart(2, "0")}`
+    };
+
+    setCalendarEvents([...calendarEvents, newEvent]);
+    setNewEventTitle("");
+  }}
+  style={{
+    marginTop: "10px",
+    background: "#8C84D9",
+    color: "#fff",
+    padding: "8px",
+    borderRadius: "6px",
+    border: "none",
+    cursor: "pointer"
+  }}
+>
+  ➕ Add Event
+</button>
 
     {calendarEvents
       .filter(event => new Date(event.date).getDate() === selectedDay)
