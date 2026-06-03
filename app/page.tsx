@@ -21,6 +21,7 @@ const [users, setUsers] = useState<any[]>([]);
 const [selectedUser, setSelectedUser] = useState<any>(null);
 const [search, setSearch] = useState("");
 const [isEditing, setIsEditing] = useState(false);
+const [mondayItems, setMondayItems] = useState<any[]>([]);
 const [editData, setEditData] = useState<any>({});
 const [activeFilterLetter, setActiveFilterLetter] = useState("All");
 const letterRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
@@ -42,19 +43,18 @@ useEffect(() => {
   fetchData();
 
   const fetchMonday = async () => {
-    console.log("FETCH MONDAY RUNNING");
+  console.log("FETCH MONDAY RUNNING");
 
-    const query = `
-      query {
-        boards(ids: 18412930770) {
-          items {
-            name
-          }
-        }
-      }
-    `;
+  const res = await fetch("/api/monday");
+  const data = await res.json();
 
-    const res = await fetch("https://api.monday.com/v2", {
+  console.log("MONDAY DATA:", data);
+
+  const items = data.data.boards[0].items_page.items;
+
+  setMondayItems(items);
+};
+
       method: "POST",
       headers: {
         Authorization: "eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjY2NjY5NTAzNSwiYWFpIjoxMSwidWlkIjo5NTQwMzYxMiwiaWFkIjoiMjAyNi0wNi0wM1QyMDoyODoyOS4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MzAzNDM5MTMsInJnbiI6InVzZTEifQ._VZ7_sBN34oUXmumJtn-EWIe6yhVPFqNZs2K9dWDynk",
@@ -283,6 +283,21 @@ onClick={() => {
 
         <h1 style={{ textAlign: "center", color: "#1C132D" }}>
           Waitlist Dashboard
+          <div style={{ marginTop: "20px" }}>
+  <h2 style={{ color: "#1C132D" }}>Monday Board</h2>
+
+  {mondayItems.map((item, index) => (
+    <div key={index} style={{
+      background: "#fff",
+      padding: "10px",
+      marginTop: "5px",
+      borderRadius: "8px",
+      boxShadow: "0 2px 6px rgba(0,0,0,0.1)"
+    }}>
+      {item.name}
+    </div>
+  ))}
+</div>
         </h1>
 
         {/* SEARCH */}
