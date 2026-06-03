@@ -2,8 +2,10 @@ export async function GET() {
   const query = `
     query {
       boards(ids: 18412930770) {
-        items {
-          name
+        items_page {
+          items {
+            name
+          }
         }
       }
     }
