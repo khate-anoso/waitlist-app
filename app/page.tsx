@@ -41,6 +41,54 @@ useEffect(() => {
 
   fetchData();
 
+  const fetchMonday = async () => {
+  const query = `
+    query {
+      boards(ids: YOUR_BOARD_ID) {
+        items {
+          name
+          column_values {
+            text
+            title
+          }
+        }
+      }
+    }
+  `;
+
+  const fetchMonday = async () => {
+  const query = `
+    query {
+      boards(ids: YOUR_BOARD_ID) {
+        items {
+          name
+          column_values {
+            text
+            title
+          }
+        }
+      }
+    }
+  `;
+
+  const res = await fetch("https://shepardmgt.monday.com/boards/18412930770", {
+    method: "POST",
+    headers: {
+      Authorization: "eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjY2NjY5NTAzNSwiYWFpIjoxMSwidWlkIjo5NTQwMzYxMiwiaWFkIjoiMjAyNi0wNi0wM1QyMDoyODoyOS4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MzAzNDM5MTMsInJnbiI6InVzZTEifQ._VZ7_sBN34oUXmumJtn-EWIe6yhVPFqNZs2K9dWDynk",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ query })
+  });
+
+  const data = await res.json();
+  console.log("MONDAY DATA:", data);
+
+fetchMonday();
+
+};
+
+
+
 }, []);
 
 
