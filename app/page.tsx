@@ -43,8 +43,6 @@ useEffect(() => {
   fetchData();
 
   const fetchMonday = async () => {
-  console.log("FETCH MONDAY RUNNING");
-
   const res = await fetch("/api/monday");
   const data = await res.json();
 
