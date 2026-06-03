@@ -1,20 +1,25 @@
 export async function GET() {
-  const query = `
-    query {
-      boards(ids: 18412930770) {
-        items_page {
-  items {
-    name
-    column_values {
-      id
-      text
-    }
-  }
-}
-
+  
+const query = `
+  query {
+    boards(ids: 18412930770) {
+      groups {
+        id
+        title
+      }
+      items_page {
+        items {
+          name
+          column_values {
+            id
+            text
+          }
+        }
       }
     }
-  `;
+  }
+`;
+
 
   const res = await fetch("https://api.monday.com/v2", {
     method: "POST",
