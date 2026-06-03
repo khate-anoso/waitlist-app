@@ -29,6 +29,8 @@ const letterRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 const [calendarEvents, setCalendarEvents] = useState<any[]>([]);
 const [selectedDay, setSelectedDay] = useState<number | null>(null); 
 const [newEventTitle, setNewEventTitle] = useState("");
+const [selectedGroup, setSelectedGroup] = useState("topics");
+
 useEffect(() => {
   const fetchData = () => {
     fetch("https://sheetdb.io/api/v1/axmaxulx9jy0s", {
@@ -381,6 +383,22 @@ onClick={() => {
     border: "1px solid #ccc"
   }}
 />
+<select
+  value={selectedGroup}
+  onChange={(e) => setSelectedGroup(e.target.value)}
+  style={{
+    width: "100%",
+    padding: "8px",
+    marginTop: "10px",
+    borderRadius: "6px"
+  }}
+>
+  <option value="topics">Ideas</option>
+  <option value="group_mm3ahc7c">Outreach</option>
+  <option value="group_mm3a2tx5">Confirmed</option>
+  <option value="group_mm3an27k">Completed</option>
+</select>
+
 
 <button
   
@@ -409,9 +427,10 @@ onClick={async () => {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      name: newEventTitle,
-      date: date
-    })
+  name: newEventTitle,
+  date: date,
+  group: selectedGroup
+})
   });
 
   const data = await res.json();

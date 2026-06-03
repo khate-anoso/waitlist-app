@@ -39,7 +39,7 @@ const query = `
 export async function POST(req: Request) {
   const body = await req.json();
 
-  const { name, date } = body;
+  const { name, date, group } = body;
 
   const safeName = name.replace(/"/g, '\\"');
 
@@ -51,6 +51,7 @@ export async function POST(req: Request) {
     mutation {
       create_item(
         board_id: 18412930770,
+        group_id: "${group}",
         item_name: "${safeName}",
         column_values: "${columnValues}"
       ) {
