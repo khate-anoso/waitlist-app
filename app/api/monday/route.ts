@@ -6,8 +6,8 @@ export async function GET() {
   items {
     name
     column_values {
-      text
       id
+      text
     }
   }
 }

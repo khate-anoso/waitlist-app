@@ -55,12 +55,18 @@ useEffect(() => {
 
   setMondayItems(items);
 
-const events = items.map((item: any, index: number) => {
+const events = items.map((item: any) => {
+  const dateColumn = item.column_values.find(
+    (col: any) => col.id === "date_mm3a5hvm"
+  );
+
+  const date = dateColumn?.text;
+
   return {
     title: item.name,
-    date: `2026-06-${(index + 5).toString().padStart(2, "0")}`
+    date: date
   };
-});
+}).filter((event: any) => event.date);
 
 setCalendarEvents(events);
 
