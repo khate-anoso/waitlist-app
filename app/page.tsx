@@ -383,26 +383,29 @@ onClick={() => {
 />
 
 <button
-  onClick={() => {
-    if (!newEventTitle) return;
+  
+onClick={async () => {
+  if (!newEventTitle) return;
 
-    const newEvent = {
-      title: newEventTitle,
-      date: `2026-06-${selectedDay.toString().padStart(2, "0")}`
-    };
+  const date = `2026-06-${selectedDay.toString().padStart(2, "0")}`;
 
-    setCalendarEvents([...calendarEvents, newEvent]);
-    setNewEventTitle("");
-  }}
-  style={{
-    marginTop: "10px",
-    background: "#8C84D9",
-    color: "#fff",
-    padding: "8px",
-    borderRadius: "6px",
-    border: "none",
-    cursor: "pointer"
-  }}
+  console.log("SENDING:", newEventTitle, date);
+
+  await fetch("/api/monday", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      name: newEventTitle,
+      date: date
+    })
+  });
+
+  setNewEventTitle("");
+  location.reload();
+}}
+
 >
   ➕ Add Event
 </button>
