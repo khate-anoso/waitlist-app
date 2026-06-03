@@ -26,7 +26,7 @@ const [editData, setEditData] = useState<any>({});
 const [activeFilterLetter, setActiveFilterLetter] = useState("All");
 const letterRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
-
+const [calendarEvents, setCalendarEvents] = useState<any[]>([]);
 const [selectedDay, setSelectedDay] = useState<number | null>(null); 
 useEffect(() => {
   const fetchData = () => {
