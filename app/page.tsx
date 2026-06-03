@@ -59,7 +59,6 @@ useEffect(() => {
 
   setMondayItems(items);
 };
-``
 
   fetchMonday();
 
