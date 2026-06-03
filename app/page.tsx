@@ -49,10 +49,6 @@ useEffect(() => {
         boards(ids: 18412930770) {
           items {
             name
-            column_values {
-              text
-              title
-            }
           }
         }
       }
@@ -71,7 +67,7 @@ useEffect(() => {
     console.log("MONDAY DATA:", data);
   };
 
-  fetchMonday(); ✅
+  fetchMonday();
 
 }, []);
 
