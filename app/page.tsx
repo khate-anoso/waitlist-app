@@ -26,11 +26,7 @@ const [editData, setEditData] = useState<any>({});
 const [activeFilterLetter, setActiveFilterLetter] = useState("All");
 const letterRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
-const [calendarEvents, setCalendarEvents] = useState<any[]>([
-  { title: "Interview Tasha", date: "2026-06-05" },
-  { title: "Interview Tonara", date: "2026-06-10" },
-  { title: "Interview Trell", date: "2026-06-15" }
-]);
+
 const [selectedDay, setSelectedDay] = useState<number | null>(null); 
 useEffect(() => {
   const fetchData = () => {
@@ -58,6 +54,17 @@ useEffect(() => {
   const items = data.data.boards[0].items_page.items;
 
   setMondayItems(items);
+
+const events = items.map((item: any, index: number) => {
+  return {
+    title: item.name,
+    date: `2026-06-${(index + 5).toString().padStart(2, "0")}`
+  };
+});
+
+setCalendarEvents(events);
+
+
 };
 
   fetchMonday();
