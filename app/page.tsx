@@ -284,19 +284,54 @@ onClick={() => {
 <div style={{ marginTop: "30px" }}>
   <h2 style={{ color: "#1C132D" }}>📅 Interview Calendar</h2>
 
-  {calendarEvents.map((event, index) => (
-    <div key={index} style={{
-      background: "#fff",
-      padding: "10px",
-      marginTop: "8px",
-      borderRadius: "8px",
-      borderLeft: "4px solid #8C84D9",
-      boxShadow: "0 2px 6px rgba(0,0,0,0.1)"
-    }}>
-      <b>{event.date}</b>
-      <div>{event.title}</div>
-    </div>
-  ))}
+  <div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "repeat(7, 1fr)",
+    gap: "8px",
+    marginTop: "10px"
+  }}
+>
+  {Array.from({ length: 30 }).map((_, dayIndex) => {
+    const day = dayIndex + 1;
+
+    const eventsForDay = calendarEvents.filter(event =>
+      new Date(event.date).getDate() === day
+    );
+
+    return (
+      <div
+        key={day}
+        style={{
+          background: "#fff",
+          minHeight: "80px",
+          padding: "5px",
+          borderRadius: "8px",
+          boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+          fontSize: "12px"
+        }}
+      >
+        <div style={{ fontWeight: "bold" }}>{day}</div>
+
+        {eventsForDay.map((event, i) => (
+          <div
+            key={i}
+            style={{
+              marginTop: "3px",
+              padding: "2px 4px",
+              background: "#8C84D9",
+              color: "#fff",
+              borderRadius: "4px",
+              fontSize: "10px"
+            }}
+          >
+            {event.title}
+          </div>
+        ))}
+      </div>
+    );
+  })}
+</div>
 </div>
 
 
