@@ -387,11 +387,8 @@ onClick={() => {
 onClick={async () => {
   if (!newEventTitle) return;
 
-  const date = new Date(
-  2026,
-  5, // June is month index 5
-  selectedDay
-).toISOString().split("T")[0];
+  const date = `2026-06-${selectedDay.toString().padStart(2, "0")}`;
+
 
   console.log("SENDING:", newEventTitle, date);
 
