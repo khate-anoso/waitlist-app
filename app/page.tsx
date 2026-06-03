@@ -51,7 +51,8 @@ useEffect(() => {
   const items = data.data.boards[0].items_page.items;
 
   setMondayItems(items);
-
+};
+``
 
   fetchMonday();
 
