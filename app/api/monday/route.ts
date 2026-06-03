@@ -35,33 +35,36 @@ export async function POST(req: Request) {
 
   const { name, date } = body;
 
-  const query = `
-  mutation {
-    create_item(
-      board_id: 18412930770,
-      item_name: "${name}",
-      column_values: "${JSON.stringify({
-        date_mm3a5hvm: {
-          date: date
-        }
-      }).replace(/"/g, '\\"')}"
-    ) {
-      id
-    }
-  }
-`;
+  const safeName = name.replace(/"/g, '\\"');
 
+  const columnValues = JSON.stringify({
+    date_mm3a5hvm: { date }
+  }).replace(/"/g, '\\"');
+
+  const query = `
+    mutation {
+      create_item(
+        board_id: 18412930770,
+        item_name: "${safeName}",
+        column_values: "${columnValues}"
+      ) {
+        id
+      }
+    }
+  `;
 
   const res = await fetch("https://api.monday.com/v2", {
     method: "POST",
     headers: {
-      Authorization: "eyJhbGciOiJIUzI1NiJ9...", // SAME TOKEN MO
+      Authorization: "eyJhbGciOiJIUzI1NiJ9...", // full token mo
       "Content-Type": "application/json"
     },
     body: JSON.stringify({ query })
   });
 
   const data = await res.json();
-console.log("MONDAY RESPONSE:", data);
+
+  console.log("MONDAY RESPONSE:", data);
+
   return Response.json(data);
 }
