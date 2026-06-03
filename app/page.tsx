@@ -51,19 +51,7 @@ useEffect(() => {
   const items = data.data.boards[0].items_page.items;
 
   setMondayItems(items);
-};
 
-      method: "POST",
-      headers: {
-        Authorization: "eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjY2NjY5NTAzNSwiYWFpIjoxMSwidWlkIjo5NTQwMzYxMiwiaWFkIjoiMjAyNi0wNi0wM1QyMDoyODoyOS4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MzAzNDM5MTMsInJnbiI6InVzZTEifQ._VZ7_sBN34oUXmumJtn-EWIe6yhVPFqNZs2K9dWDynk",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ query })
-    });
-
-    const data = await res.json();
-    console.log("MONDAY DATA:", data);
-  };
 
   fetchMonday();
 
@@ -281,7 +269,9 @@ onClick={() => {
 
         <h1 style={{ textAlign: "center", color: "#1C132D" }}>
           Waitlist Dashboard
-          <div style={{ marginTop: "20px" }}>
+          
+        </h1>
+<div style={{ marginTop: "20px" }}>
   <h2 style={{ color: "#1C132D" }}>Monday Board</h2>
 
   {mondayItems.map((item, index) => (
@@ -296,8 +286,6 @@ onClick={() => {
     </div>
   ))}
 </div>
-        </h1>
-
         {/* SEARCH */}
         <div style={{ position: "relative", marginTop: "10px" }}>
           <input
