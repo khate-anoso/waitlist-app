@@ -3,10 +3,15 @@ export async function GET() {
     query {
       boards(ids: 18412930770) {
         items_page {
-          items {
-            name
-          }
-        }
+  items {
+    name
+    column_values {
+      text
+      id
+    }
+  }
+}
+
       }
     }
   `;
