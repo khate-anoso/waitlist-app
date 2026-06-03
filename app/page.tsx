@@ -27,12 +27,11 @@ const [activeFilterLetter, setActiveFilterLetter] = useState("All");
 const letterRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
 const [calendarEvents, setCalendarEvents] = useState<any[]>([
-const [selectedDay, setSelectedDay] = useState<number | null>(null); 
   { title: "Interview Tasha", date: "2026-06-05" },
   { title: "Interview Tonara", date: "2026-06-10" },
   { title: "Interview Trell", date: "2026-06-15" }
 ]);
-
+const [selectedDay, setSelectedDay] = useState<number | null>(null); 
 useEffect(() => {
   const fetchData = () => {
     fetch("https://sheetdb.io/api/v1/axmaxulx9jy0s", {
