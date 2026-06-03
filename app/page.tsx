@@ -391,7 +391,18 @@ onClick={async () => {
 
   console.log("SENDING:", newEventTitle, date);
 
-  await fetch("/api/monday", {
+ 
+  const newEvent = {
+    title: newEventTitle,
+    date: date
+  };
+
+  setCalendarEvents([...calendarEvents, newEvent]);
+
+  setNewEventTitle("");
+
+ 
+  const res = await fetch("/api/monday", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -402,8 +413,8 @@ onClick={async () => {
     })
   });
 
-  setNewEventTitle("");
-  location.reload();
+  const data = await res.json();
+  console.log("MONDAY RESPONSE:", data);
 }}
 
 >
