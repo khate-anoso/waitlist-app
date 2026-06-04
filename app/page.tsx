@@ -317,14 +317,16 @@ onClick={() => {
 
 
 <div style={{
-  flex: 1,
+  display: "flex",
+  gap: "20px",
   padding: "20px",
-  background: "#F3ECE2"
+  background: "#F3ECE2",
+  flex: 1
 }}>
 
 
 
-      <div style={{ maxWidth: "600px", width: "100%", margin: "0 auto" }}>
+      <div style={{ flex: 1 }}>
 
         <h1 style={{ textAlign: "center", color: "#1C132D" }}>
           Waitlist Dashboard
@@ -550,18 +552,9 @@ onClick={async () => {
 )}
 
 
-  {mondayItems.map((item, index) => (
-    <div key={index} style={{
-      background: "#fff",
-      padding: "10px",
-      marginTop: "5px",
-      borderRadius: "8px",
-      boxShadow: "0 2px 6px rgba(0,0,0,0.1)"
-    }}>
-      {item.name}
-    </div>
-  ))}
+  
 </div>
+<div style={{ flex: 1 }}></div>
         {/* SEARCH */}
         <div style={{ position: "relative", marginTop: "10px" }}>
           <input
@@ -757,6 +750,7 @@ onClick={() => {
 )}
 
         {/* POPUP */}
+        </div>
         {selectedUser && (
   <div style={{
     position: "fixed",
