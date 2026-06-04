@@ -34,6 +34,7 @@ const [niche, setNiche] = useState("");
 const [social, setSocial] = useState("");
 const [contact, setContact] = useState("");
 const [selectedGroup, setSelectedGroup] = useState("topics");
+const [activeEvent, setActiveEvent] = useState<any>(null);
 
 useEffect(() => {
   const fetchData = () => {
@@ -67,20 +68,44 @@ const events = items.map((item: any) => {
     (col: any) => col.id === "date_mm3a5hvm"
   );
 
-let date = dateColumn?.text;
+  const statusColumn = item.column_values.find(
+    (col: any) => col.id === "color_mm3anqa3"
+  );
 
-if (!date && dateColumn?.value) {
-  const parsed = JSON.parse(dateColumn.value);
-  date = parsed?.date;
-}
- 
+  const brandColumn = item.column_values.find(
+    (col: any) => col.id === "text_mm3ayaff"
+  );
 
+  const nicheColumn = item.column_values.find(
+    (col: any) => col.id === "text_mm404sek"
+  );
+
+  const socialColumn = item.column_values.find(
+    (col: any) => col.id === "link_mm3ybwmx"
+  );
+
+  const contactColumn = item.column_values.find(
+    (col: any) => col.id === "text_mm3ad018"
+  );
+
+  let date = dateColumn?.text;
+
+  if (!date && dateColumn?.value) {
+    const parsed = JSON.parse(dateColumn.value);
+    date = parsed?.date;
+  }
 
   return {
     title: item.name,
-    date: date
+    date: date,
+    status: statusColumn?.text,
+    brand: brandColumn?.text,
+    niche: nicheColumn?.text,
+    social: socialColumn?.text,
+    contact: contactColumn?.text
   };
 }).filter((event: any) => event.date);
+
 
 setCalendarEvents(events);
 
@@ -345,20 +370,22 @@ onClick={() => {
         <div style={{ fontWeight: "bold" }}>{day}</div>
 
         {eventsForDay.map((event, i) => (
-          <div
-            key={i}
-            style={{
-              marginTop: "3px",
-              padding: "2px 4px",
-              background: "#8C84D9",
-              color: "#fff",
-              borderRadius: "4px",
-              fontSize: "10px"
-            }}
-          >
-            {event.title}
-          </div>
-        ))}
+  <div
+    key={i}
+    onClick={() => setActiveEvent(event)} ✅ ADD THIS
+    style={{
+      marginTop: "3px",
+      padding: "2px 4px",
+      background: "#8C84D9",
+      color: "#fff",
+      borderRadius: "4px",
+      fontSize: "10px",
+      cursor: "pointer"
+    }}
+  >
+    {event.title}
+  </div>
+))}
       </div>
     );
   })}
@@ -1143,6 +1170,44 @@ maxHeight: "90vh",
 
       </div>
     </div>
+    {activeEvent && (
+  <div style={{
+    position: "fixed",
+    bottom: "20px",
+    right: "20px",
+    background: "#fff",
+    padding: "20px",
+    borderRadius: "12px",
+    boxShadow: "0 4px 15px rgba(0,0,0,0.3)",
+    width: "300px",
+    zIndex: 999
+  }}>
+    <h3>{activeEvent.title}</h3>
+
+    <p><b>Status:</b> {activeEvent.status}</p>
+    <p><b>Brand:</b> {activeEvent.brand}</p>
+    <p><b>Niche:</b> {activeEvent.niche}</p>
+    <p><b>Social:</b> {activeEvent.social}</p>
+    <p><b>Contact:</b> {activeEvent.contact}</p>
+    <p><b>Date:</b> {activeEvent.date}</p>
+
+    <button
+      onClick={() => setActiveEvent(null)}
+      style={{
+        marginTop: "10px",
+        background: "#EF5D41",
+        color: "#fff",
+        border: "none",
+        padding: "8px",
+        borderRadius: "8px",
+        cursor: "pointer"
+      }}
+    >
+      Close
+    </button>
+  </div>
+)}
+
   </div>
 );
 }
