@@ -36,6 +36,9 @@ const [contact, setContact] = useState("");
 const [selectedGroup, setSelectedGroup] = useState("topics");
 const [activeEvent, setActiveEvent] = useState<any>(null);
 const [showAddForm, setShowAddForm] = useState(false);
+const [showEditForm, setShowEditForm] = useState(false);
+const [editEvent, setEditEvent] = useState<any>(null);
+
 const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 });
 
 const fetchMonday = async () => {
@@ -1133,29 +1136,9 @@ transform: "translate(-50%, -50%)",
         }}>
           <h3>{activeEvent.title}</h3>
           <button
-  onClick={async () => {
-    const newTitle = prompt("Edit title", activeEvent.title);
-    if (!newTitle) return;
-
-    const newBrand = prompt("Edit brand", activeEvent.brand || "");
-    const newNiche = prompt("Edit niche", activeEvent.niche || "");
-    const newSocial = prompt("Edit social", activeEvent.social || "");
-    const newContact = prompt("Edit contact", activeEvent.contact || "");
-
-    await fetch("/api/monday", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        id: activeEvent.id,
-        title: newTitle,
-        brand: newBrand,
-        niche: newNiche,
-        social: newSocial,
-        contact: newContact
-      })
-    });
-
-    await fetchMonday();
+  onClick={() => {
+    setEditEvent(activeEvent);
+    setShowEditForm(true);
     setActiveEvent(null);
   }}
   style={{
@@ -1285,7 +1268,7 @@ transform: "translate(-50%, -50%)",
   <option value="group_mm3a2tx5">Confirmed</option>
   <option value="group_mm3an27k">Completed</option>
 </select>
-``
+
 
     <button
       onClick={async () => {
