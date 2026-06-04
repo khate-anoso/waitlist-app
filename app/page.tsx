@@ -78,7 +78,7 @@ const contactCol = item.column_values.find(
   id: item.id,
   title: item.name,
   date: date,
-
+status: item.group?.title,
 brand: JSON.stringify(item.column_values),
   niche: "",
   social: "",
