@@ -75,14 +75,14 @@ const contactCol = item.column_values.find(
   }
 
   return {
-    id: item.id,
-    title: item.name,
-    date: date,
-    brand: brandCol?.text,
-    niche: nicheCol?.text,
-    social: socialCol?.text,
-    contact: contactCol?.text
-  };
+  id: item.id,
+  title: item.name,
+  date: date,
+  brand: brandCol?.text || "—",
+  niche: nicheCol?.text || "—",
+  social: socialCol?.text || "—",
+  contact: contactCol?.text || "—"
+};
 
 }).filter((event: any) => event.date);
 
