@@ -46,26 +46,26 @@ const fetchMonday = async () => {
 
   
 const events = items.map((item: any) => {
-  console.log("COLUMN VALUES:", item.column_values);
+  
   const dateColumn = item.column_values.find(
     (col: any) => col.id === "date_mm3a5hvm"
   );
 
   const brandCol = item.column_values.find(
-    (col: any) => col.id === "brand"
-  );
+  (col: any) => col.id === "text_mm3avaff"
+);
 
-  const nicheCol = item.column_values.find(
-    (col: any) => col.id === "niche"
-  );
+const nicheCol = item.column_values.find(
+  (col: any) => col.id === "text_mm4dsek"
+);
 
-  const socialCol = item.column_values.find(
-    (col: any) => col.id === "social"
-  );
+const socialCol = item.column_values.find(
+  (col: any) => col.id === "link_mm3vbwmx"
+);
 
-  const contactCol = item.column_values.find(
-    (col: any) => col.id === "contact"
-  );
+const contactCol = item.column_values.find(
+  (col: any) => col.id === "text_mm3ad018"
+);
 
   let date = dateColumn?.text;
 
