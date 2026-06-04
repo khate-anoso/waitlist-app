@@ -504,64 +504,41 @@ onClick={() => {
 
 
 <button
-  
-onClick={async () => {
-  if (!newEventTitle) return;
+  onClick={async () => {
+    if (!newEventTitle) return;
 
-  const date = `2026-06-${selectedDay.toString().padStart(2, "0")}`;
+    const date = `2026-06-${selectedDay.toString().padStart(2, "0")}`;
 
+    console.log("SENDING:", newEventTitle, date);
 
-  console.log("SENDING:", newEventTitle, date);
+    const res = await fetch("/api/monday", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: newEventTitle,
+        date: date,
+        group: selectedGroup,
+        brand,
+        niche,
+        social,
+        contact
+      })
+    });
 
- 
-  
-const res = await fetch("/api/monday", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    name: newEventTitle,
-    date: date,
-    group: selectedGroup,
-    brand,
-    niche,
-    social,
-    contact
-  })
-});
+    await res.json();
 
-await res.json();
+    await fetchMonday();
 
-
-await fetchMonday();
-
-
-  setNewEventTitle("");
-
- 
-  const response = await fetch("/api/monday", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-  name: newEventTitle,
-  date: date,
-  group: selectedGroup,
-  brand: brand,
-  niche: niche,
-  social: social,
-  contact: contact
-})
-  });
-
-  const data = await response.json();
-  console.log("MONDAY RESPONSE:", data);
-  await fetchMonday();
-}}
-
+    setNewEventTitle("");
+  }}
 >
   ➕ Add Event
 </button>
+
+ 
+  
+
+
 
     {calendarEvents
   .filter(event => parseInt(event.date.split("-")[2]) === selectedDay)
