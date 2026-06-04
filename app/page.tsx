@@ -79,7 +79,17 @@ useEffect(() => {
   };
 
   fetchData();
+
+  // ✅ initial load
   fetchMonday();
+
+  // ✅ auto refresh every 3 seconds
+  const interval = setInterval(() => {
+    fetchMonday();
+  }, 3000);
+
+  // ✅ cleanup (important)
+  return () => clearInterval(interval);
 }, []);
 
 
@@ -504,12 +514,26 @@ onClick={async () => {
   console.log("SENDING:", newEventTitle, date);
 
  
-  const newEvent = {
-    title: newEventTitle,
-    date: date
-  };
+  
+const res = await fetch("/api/monday", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    name: newEventTitle,
+    date: date,
+    group: selectedGroup,
+    brand,
+    niche,
+    social,
+    contact
+  })
+});
 
-  setCalendarEvents([...calendarEvents, newEvent]);
+await res.json();
+
+
+await fetchMonday();
+
 
   setNewEventTitle("");
 
