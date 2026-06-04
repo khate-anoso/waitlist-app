@@ -245,7 +245,23 @@ const saveEdit = async () => {
 return (
   
 <div 
-  onClick={() => setSelectedDay(null)}
+  
+onClick={(e) => {
+  if ((e.target as HTMLElement).id === "background") {
+    setSelectedDay(null);
+  }
+}}
+
+  style={{ display: "flex", minHeight: "100vh", fontFamily: "system-ui" }}
+>
+
+<div 
+  id="background"
+  onClick={(e) => {
+    if ((e.target as HTMLElement).id === "background") {
+      setSelectedDay(null);
+    }
+  }}
   style={{ display: "flex", minHeight: "100vh", fontFamily: "system-ui" }}
 >
 
@@ -333,10 +349,7 @@ onClick={() => {
 
       <div style={{ flex: 1 }}>
 
-        <h1 style={{ textAlign: "center", color: "#1C132D" }}>
-          Waitlist Dashboard
-          
-        </h1>
+        
 <div style={{ marginTop: "20px" }}>
   
 
@@ -359,9 +372,14 @@ onClick={() => {
 );
 
     return (
-  <div
-    key={day}
-    onClick={() => setSelectedDay(day)}
+  
+<div
+  key={day}
+  onClick={(e) => {
+    e.stopPropagation();
+    setSelectedDay(day);
+  }}
+
     style={{
       background: "#fff",
       minHeight: "80px",
