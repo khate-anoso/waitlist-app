@@ -243,7 +243,12 @@ const saveEdit = async () => {
 };
 
 return (
-  <div style={{ display: "flex", minHeight: "100vh", fontFamily: "system-ui" }}>
+  
+<div 
+  onClick={() => setSelectedDay(null)}
+  style={{ display: "flex", minHeight: "100vh", fontFamily: "system-ui" }}
+>
+
 
     {/* SIDEBAR */}
     <div style={{
@@ -333,7 +338,7 @@ onClick={() => {
           
         </h1>
 <div style={{ marginTop: "20px" }}>
-  <h2 style={{ color: "#1C132D" }}>Monday Board</h2>
+  
 
 <div style={{ marginTop: "30px" }}>
   <h2 style={{ color: "#1C132D" }}>📅 Interview Calendar</h2>
@@ -393,8 +398,17 @@ onClick={() => {
   })}
 </div>
 </div>
+<h2 style={{
+  marginTop: "20px", 
+  color: "#1C132D",
+  textAlign: "center"
+}}>
+  Waitlist Dashboard
+</h2>
 {selectedDay && (
-  <div style={{
+  <div
+    onClick={(e) => e.stopPropagation()}
+    style={{
     marginTop: "20px",
     background: "#fff",
     padding: "15px",
