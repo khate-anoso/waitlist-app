@@ -47,25 +47,31 @@ const fetchMonday = async () => {
   
 const events = items.map((item: any) => {
 
-  const dateColumn = item.column_values.find(
-    (col: any) => col.id === "date_mm3a5hvm"
-  );
+const dateColumn = item.column_values.find(
+  (col: any) => col.id === "date_mm3a5hvm"
+);
 
-  const brandCol = item.column_values.find(
-    (col: any) => col.id === "text_mm3avaff"
-  );
 
-  const nicheCol = item.column_values.find(
-    (col: any) => col.id === "text_mm404sek"
-  );
+  const statusCol = item.column_values.find(
+  (col: any) => col.id === "color_mm3anqa3"
+);
 
-  const socialCol = item.column_values.find(
-    (col: any) => col.id === "link_mm3vbwmx"
-  );
+const brandCol = item.column_values.find(
+  (col: any) => col.id === "text_mm3avaff"
+);
 
-  const contactCol = item.column_values.find(
-    (col: any) => col.id === "text_mm3ad018"
-  );
+const nicheCol = item.column_values.find(
+  (col: any) => col.id === "text_mm404sek"
+);
+
+const socialCol = item.column_values.find(
+  (col: any) => col.id === "link_mm3vbwmx"
+);
+
+const contactCol = item.column_values.find(
+  (col: any) => col.id === "text_mm3ad018"
+);
+
 
   let date = dateColumn?.text;
 
@@ -74,16 +80,18 @@ const events = items.map((item: any) => {
     date = parsed?.date;
   }
 
-  return {
-    id: item.id,
-    title: item.name,
-    date: date,
-    status: item.group?.title,
-    brand: brandCol?.text || "—",
-    niche: nicheCol?.text || "—",
-    social: socialCol?.text || "—",
-    contact: contactCol?.text || "—"
-  };
+  
+return {
+  id: item.id,
+  title: item.name,
+  date: date,
+  status: statusCol?.text || "—",
+  brand: brandCol?.text || "—",
+  niche: nicheCol?.text || "—",
+  social: socialCol?.text || "—",
+  contact: contactCol?.text || "—"
+};
+
 
 }).filter((event: any) => event.date);
 
