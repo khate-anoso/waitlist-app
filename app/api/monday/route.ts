@@ -57,7 +57,11 @@ const columnValues = JSON.stringify({
   color_mm3anqa3: { label: statusMap[group] },
 
   text_mm3ayaff: brand || "",
-  text_mm3mf4yc0: String(niche),      
+  
+text_mm3mf4yc0: {
+  text: niche || ""
+},
+
   text_mm3ad018: contact || "",
   link_mm3ybwmx: { url: social || "", text: social || "" }
 
