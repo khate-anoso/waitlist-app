@@ -581,36 +581,10 @@ onClick={async () => {
       {event.title}
 
       <div style={{ display: "flex", gap: "5px", marginTop: "5px" }}>
-        
+
         <button
-          onClick={() => {
-            <button
-  onClick={async () => {
-    const updated = prompt("Edit title", event.title);
-    if (!updated) return;
-
-    // ✅ update UI
-    const updatedEvents = [...calendarEvents];
-    updatedEvents[index] = {
-      ...updatedEvents[index],
-      title: updated
-    };
-    setCalendarEvents(updatedEvents);
-
-    // ✅ send to Monday
-    await fetch("/api/monday", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        id: event.id,
-        newTitle: updated
-      })
-    });
-  }}
->
-  ✏️
-</button>
-
+          onClick={async () => {
+            const updated = prompt("Edit title", event.title);
             if (!updated) return;
 
             const updatedEvents = [...calendarEvents];
@@ -618,44 +592,36 @@ onClick={async () => {
               ...updatedEvents[index],
               title: updated
             };
-
             setCalendarEvents(updatedEvents);
+
+            await fetch("/api/monday", {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                id: event.id,
+                newTitle: updated
+              })
+            });
           }}
-          style={{
-            fontSize: "10px",
-            padding: "3px",
-            cursor: "pointer"
-          }}
+          style={{ fontSize: "10px", padding: "3px", cursor: "pointer" }}
         >
           ✏️
         </button>
 
         <button
-  onClick={async () => {
-    // ✅ update UI
-    const filtered = calendarEvents.filter((_, i) => i !== index);
-    setCalendarEvents(filtered);
-
-    // ✅ delete from Monday
-    await fetch("/api/monday", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        id: event.id
-      })
-    });
-  }}
->
-  🗑️
-</button>
-
+          onClick={async () => {
+            const filtered = calendarEvents.filter((_, i) => i !== index);
             setCalendarEvents(filtered);
+
+            await fetch("/api/monday", {
+              method: "DELETE",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                id: event.id
+              })
+            });
           }}
-          style={{
-            fontSize: "10px",
-            padding: "3px",
-            cursor: "pointer"
-          }}
+          style={{ fontSize: "10px", padding: "3px", cursor: "pointer" }}
         >
           🗑️
         </button>
