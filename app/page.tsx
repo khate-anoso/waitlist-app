@@ -450,8 +450,9 @@ onClick={async () => {
       ))}
 
     {calendarEvents.filter(event =>
-      .filter(event => parseInt(event.date.split("-")[2]) === selectedDay)
-    ).length === 0 && <p>No events</p>}
+  parseInt(event.date.split("-")[2]) === selectedDay
+).length === 0 && <p>No events</p>}
+
   </div>
 )}
 
