@@ -1185,7 +1185,7 @@ maxHeight: "90vh",
 )}
 </div>
       </div>
-
+</div>
       {activeEvent && (
         <div style={{
           position: "fixed",
