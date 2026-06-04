@@ -36,85 +36,50 @@ const [contact, setContact] = useState("");
 const [selectedGroup, setSelectedGroup] = useState("topics");
 const [activeEvent, setActiveEvent] = useState<any>(null);
 
-useEffect(() => {
-  const fetchData = () => {
-    fetch("https://sheetdb.io/api/v1/axmaxulx9jy0s", {
-      cache: "no-store"
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data)) {
-          setUsers(data);
-        } else {
-          setUsers([]);
-        }
-      });
-  };
-
-  fetchData();
-
-  const fetchMonday = async () => {
+const fetchMonday = async () => {
   const res = await fetch("/api/monday");
   const data = await res.json();
-
-  console.log("MONDAY DATA:", data);
 
   const items = data.data.boards[0].items_page.items;
 
   setMondayItems(items);
 
-const events = items.map((item: any) => {
-  const dateColumn = item.column_values.find(
-    (col: any) => col.id === "date_mm3a5hvm"
-  );
+  const events = items.map((item: any) => {
+    const dateColumn = item.column_values.find(
+      (col: any) => col.id === "date_mm3a5hvm"
+    );
 
-  const statusColumn = item.column_values.find(
-    (col: any) => col.id === "color_mm3anqa3"
-  );
+    let date = dateColumn?.text;
 
-  const brandColumn = item.column_values.find(
-    (col: any) => col.id === "text_mm3ayaff"
-  );
+    if (!date && dateColumn?.value) {
+      const parsed = JSON.parse(dateColumn.value);
+      date = parsed?.date;
+    }
 
-  const nicheColumn = item.column_values.find(
-    (col: any) => col.id === "text_mm404sek"
-  );
+    return {
+      id: item.id,
+      title: item.name,
+      date: date
+    };
+  }).filter((event: any) => event.date);
 
-  const socialColumn = item.column_values.find(
-    (col: any) => col.id === "link_mm3ybwmx"
-  );
-
-  const contactColumn = item.column_values.find(
-    (col: any) => col.id === "text_mm3ad018"
-  );
-
-  let date = dateColumn?.text;
-
-  if (!date && dateColumn?.value) {
-    const parsed = JSON.parse(dateColumn.value);
-    date = parsed?.date;
-  }
-
-  return {
-    id: item.id,
-    title: item.name,
-    date: date,
-    status: statusColumn?.text,
-    brand: brandColumn?.text,
-    niche: nicheColumn?.text,
-    social: socialColumn?.text,
-    contact: contactColumn?.text
-  };
-}).filter((event: any) => event.date);
-
-
-setCalendarEvents(events);
-
-
+  setCalendarEvents(events);
 };
 
-  fetchMonday();
+useEffect(() => {
+  const fetchData = async () => {
+    const res = await fetch("https://sheetdb.io/api/v1/axmaxulx9jy0s");
+    const data = await res.json();
 
+    if (Array.isArray(data)) {
+      setUsers(data);
+    } else {
+      setUsers([]);
+    }
+  };
+
+  fetchData();
+  fetchMonday();
 }, []);
 
 
@@ -567,6 +532,7 @@ onClick={async () => {
 
   const data = await res.json();
   console.log("MONDAY RESPONSE:", data);
+  await fetchMonday();
 }}
 
 >
@@ -602,6 +568,7 @@ onClick={async () => {
                 newTitle: updated
               })
             });
+            await fetchMonday();
           }}
           style={{ fontSize: "10px", padding: "3px", cursor: "pointer" }}
         >
@@ -620,6 +587,7 @@ onClick={async () => {
                 id: event.id
               })
             });
+            await fetchMonday();
           }}
           style={{ fontSize: "10px", padding: "3px", cursor: "pointer" }}
         >
