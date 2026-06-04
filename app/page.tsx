@@ -1270,6 +1270,23 @@ transform: "translate(-50%, -50%)",
       style={{ width: "100%", marginTop: "8px", padding: "8px" }}
     />
 
+    <select
+  value={selectedGroup}
+  onChange={(e) => setSelectedGroup(e.target.value)}
+  style={{
+    width: "100%",
+    marginTop: "8px",
+    padding: "8px",
+    borderRadius: "6px"
+  }}
+>
+  <option value="topics">Idea</option>
+  <option value="group_mm3ahc7c">Outreach</option>
+  <option value="group_mm3a2tx5">Confirmed</option>
+  <option value="group_mm3an27k">Completed</option>
+</select>
+``
+
     <button
       onClick={async () => {
         if (!selectedDay || !newEventTitle) return;
