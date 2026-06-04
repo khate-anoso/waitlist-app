@@ -58,9 +58,7 @@ const columnValues = JSON.stringify({
 
   text_mm3ayaff: brand || "",
   
-text_mm3mf4yc0: {
-  text: niche || ""
-},
+text_mm404sek: niche || "",
 
   text_mm3ad018: contact || "",
   link_mm3ybwmx: { url: social || "", text: social || "" }
