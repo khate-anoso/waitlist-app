@@ -35,6 +35,7 @@ const [social, setSocial] = useState("");
 const [contact, setContact] = useState("");
 const [selectedGroup, setSelectedGroup] = useState("topics");
 const [activeEvent, setActiveEvent] = useState<any>(null);
+const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 });
 
 const fetchMonday = async () => {
   const res = await fetch("/api/monday");
@@ -402,7 +403,18 @@ onClick={() => {
         {eventsForDay.map((event, i) => (
   <div
     key={i}
-    onClick={() => setActiveEvent(event)} 
+    
+onClick={(e) => {
+  e.stopPropagation();
+
+  setPopupPosition({
+    x: e.clientX,
+    y: e.clientY
+  });
+
+  setActiveEvent(event);
+}}
+
     style={{
       marginTop: "3px",
       padding: "2px 4px",
@@ -1275,9 +1287,12 @@ maxHeight: "90vh",
 </div>
       {activeEvent && (
         <div style={{
-          position: "fixed",
-          bottom: "20px",
-          right: "20px",
+          
+position: "fixed",
+top: popupPosition.y,
+left: popupPosition.x,
+transform: "translate(-50%, -50%)",
+
           background: "#fff",
           padding: "20px",
           borderRadius: "12px",
