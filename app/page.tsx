@@ -244,16 +244,7 @@ const saveEdit = async () => {
 
 return (
   
-<div 
-  
-onClick={(e) => {
-  if ((e.target as HTMLElement).id === "background") {
-    setSelectedDay(null);
-  }
-}}
 
-  style={{ display: "flex", minHeight: "100vh", fontFamily: "system-ui" }}
->
 
 <div 
   id="background"
@@ -586,8 +577,7 @@ onClick={async () => {
 
   
 </div>
-<div style={{ flex: 1 }}></div>
-        {/* SEARCH */}
+<div style={{ flex: 1 }}>
         <div style={{ position: "relative", marginTop: "10px" }}>
           <input
             value={search}
