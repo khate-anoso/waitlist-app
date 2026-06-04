@@ -29,6 +29,10 @@ const letterRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 const [calendarEvents, setCalendarEvents] = useState<any[]>([]);
 const [selectedDay, setSelectedDay] = useState<number | null>(null); 
 const [newEventTitle, setNewEventTitle] = useState("");
+const [brand, setBrand] = useState("");
+const [niche, setNiche] = useState("");
+const [social, setSocial] = useState("");
+const [contact, setContact] = useState("");
 const [selectedGroup, setSelectedGroup] = useState("topics");
 
 useEffect(() => {
