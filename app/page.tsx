@@ -387,6 +387,64 @@ onClick={() => {
     border: "1px solid #ccc"
   }}
 />
+
+<input
+  type="text"
+  placeholder="Brand / Company"
+  value={brand}
+  onChange={(e) => setBrand(e.target.value)}
+  style={{
+    width: "100%",
+    padding: "8px",
+    marginTop: "10px",
+    borderRadius: "6px",
+    border: "1px solid #ccc"
+  }}
+/>
+
+<input
+  type="text"
+  placeholder="Niche"
+  value={niche}
+  onChange={(e) => setNiche(e.target.value)}
+  style={{
+    width: "100%",
+    padding: "8px",
+    marginTop: "10px",
+    borderRadius: "6px",
+    border: "1px solid #ccc"
+  }}
+/>
+
+<input
+  type="text"
+  placeholder="Social Handle"
+  value={social}
+  onChange={(e) => setSocial(e.target.value)}
+  style={{
+    width: "100%",
+    padding: "8px",
+    marginTop: "10px",
+    borderRadius: "6px",
+    border: "1px solid #ccc"
+  }}
+/>
+
+<input
+  type="text"
+  placeholder="Contact Info"
+  value={contact}
+  onChange={(e) => setContact(e.target.value)}
+  style={{
+    width: "100%",
+    padding: "8px",
+    marginTop: "10px",
+    borderRadius: "6px",
+    border: "1px solid #ccc"
+  }}
+/>
+
+
 <select
   value={selectedGroup}
   onChange={(e) => setSelectedGroup(e.target.value)}
