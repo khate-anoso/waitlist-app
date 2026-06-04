@@ -425,6 +425,19 @@ onClick={() => {
     boxShadow: "0 2px 8px rgba(0,0,0,0.2)"
   }}>
     <h3>Events on Day {selectedDay}</h3>
+<button
+  onClick={() => setSelectedDay(null)}
+  style={{
+    marginTop: "10px",
+    background: "#ccc",
+    border: "none",
+    padding: "6px 10px",
+    borderRadius: "6px",
+    cursor: "pointer"
+  }}
+>
+  Close
+</button>
 
     <input
   type="text"
@@ -560,12 +573,54 @@ onClick={async () => {
 </button>
 
     {calendarEvents
-      .filter(event => parseInt(event.date.split("-")[2]) === selectedDay)
-      .map((event, index) => (
-        <div key={index} style={{ marginTop: "5px" }}>
-          {event.title}
-        </div>
-      ))}
+  .filter(event => parseInt(event.date.split("-")[2]) === selectedDay)
+  .map((event, index) => (
+    <div key={index} style={{ marginTop: "5px" }}>
+      
+      {event.title}
+
+      <div style={{ display: "flex", gap: "5px", marginTop: "5px" }}>
+        
+        <button
+          onClick={() => {
+            const updated = prompt("Edit title", event.title);
+            if (!updated) return;
+
+            const updatedEvents = [...calendarEvents];
+            updatedEvents[index] = {
+              ...updatedEvents[index],
+              title: updated
+            };
+
+            setCalendarEvents(updatedEvents);
+          }}
+          style={{
+            fontSize: "10px",
+            padding: "3px",
+            cursor: "pointer"
+          }}
+        >
+          ✏️
+        </button>
+
+        <button
+          onClick={() => {
+            const filtered = calendarEvents.filter((_, i) => i !== index);
+            setCalendarEvents(filtered);
+          }}
+          style={{
+            fontSize: "10px",
+            padding: "3px",
+            cursor: "pointer"
+          }}
+        >
+          🗑️
+        </button>
+
+      </div>
+
+    </div>
+))}
 
     {calendarEvents.filter(event =>
   parseInt(event.date.split("-")[2]) === selectedDay
