@@ -1,31 +1,33 @@
 export async function GET() {
-  const query = `
-    query {
-      boards(ids: 18412930770) {
-        items_page {
-          items {
-            id
-            name
-            column_values {
-              id
-              text
-            }
-          }
-        }
-      }
-    }
-  `;
-
   const res = await fetch("https://api.monday.com/v2", {
     method: "POST",
     headers: {
-      Authorization: process.env.MONDAY_API_KEY!,
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      Authorization: process.env.MONDAY_API_KEY || "",
     },
-    body: JSON.stringify({ query })
+    body: JSON.stringify({
+      query: `
+        {
+          boards(limit:1) {
+            items_page {
+              items {
+                id
+                name
+                column_values {
+                  id
+                  text
+                  value
+                }
+              }
+            }
+          }
+        }
+      `,
+    }),
   });
 
   const data = await res.json();
+
   return Response.json(data);
 }
 

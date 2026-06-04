@@ -43,11 +43,15 @@ const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 });
 
 const fetchMonday = async () => {
   const res = await fetch("/api/monday");
-  const data = await res.json();
+  
+const data = await res.json();
+console.log("MONDAY DATA:", data);
 
-  const items = data.data.boards[0].items_page.items;
+const items =
+  data?.data?.boards?.[0]?.items_page?.items || [];
 
-  setMondayItems(items);
+setMondayItems(items);
+
 
   
 const events = items.map((item: any) => {
@@ -1137,7 +1141,11 @@ transform: "translate(-50%, -50%)",
           <h3>{activeEvent.title}</h3>
           <button
   onClick={() => {
-    setEditEvent(activeEvent);
+    
+setEditEvent({
+  ...activeEvent
+});
+
     setShowEditForm(true);
     setActiveEvent(null);
   }}
@@ -1253,23 +1261,6 @@ transform: "translate(-50%, -50%)",
       style={{ width: "100%", marginTop: "8px", padding: "8px" }}
     />
 
-    <select
-  value={selectedGroup}
-  onChange={(e) => setSelectedGroup(e.target.value)}
-  style={{
-    width: "100%",
-    marginTop: "8px",
-    padding: "8px",
-    borderRadius: "6px"
-  }}
->
-  <option value="topics">Idea</option>
-  <option value="group_mm3ahc7c">Outreach</option>
-  <option value="group_mm3a2tx5">Confirmed</option>
-  <option value="group_mm3an27k">Completed</option>
-</select>
-
-
     <button
       onClick={async () => {
         if (!selectedDay || !newEventTitle) return;
@@ -1293,21 +1284,12 @@ transform: "translate(-50%, -50%)",
         });
 
         await fetchMonday();
-
         setShowAddForm(false);
-        setNewEventTitle("");
-        setBrand("");
-        setNiche("");
-        setSocial("");
-        setContact("");
       }}
       style={{
         marginTop: "10px",
         background: "#66C6C4",
         padding: "10px",
-        borderRadius: "8px",
-        border: "none",
-        cursor: "pointer",
         width: "100%"
       }}
     >
@@ -1320,9 +1302,6 @@ transform: "translate(-50%, -50%)",
         marginTop: "5px",
         background: "#ccc",
         padding: "8px",
-        borderRadius: "8px",
-        border: "none",
-        cursor: "pointer",
         width: "100%"
       }}
     >
@@ -1330,8 +1309,115 @@ transform: "translate(-50%, -50%)",
     </button>
   </div>
 )}
-``
 
-    </div>
+{showEditForm && editEvent && (
+  <div
+    style={{
+      position: "fixed",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      background: "#fff",
+      padding: "20px",
+      borderRadius: "12px",
+      boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+      width: "300px",
+      zIndex: 1000
+    }}
+  >
+    <h3>Edit Event</h3>
+
+    <input
+      value={editEvent?.title || ""}
+      onChange={(e) =>
+        setEditEvent({ ...editEvent, title: e.target.value })
+      }
+      style={{ width: "100%", marginTop: "8px", padding: "8px" }}
+    />
+
+    <input
+      value={editEvent?.brand || ""}
+      onChange={(e) =>
+        setEditEvent({ ...editEvent, brand: e.target.value })
+      }
+      style={{ width: "100%", marginTop: "8px", padding: "8px" }}
+    />
+
+    <input
+      value={editEvent?.niche || ""}
+      onChange={(e) =>
+        setEditEvent({ ...editEvent, niche: e.target.value })
+      }
+      style={{ width: "100%", marginTop: "8px", padding: "8px" }}
+    />
+
+    <input
+      value={editEvent?.social || ""}
+      onChange={(e) =>
+        setEditEvent({ ...editEvent, social: e.target.value })
+      }
+      style={{ width: "100%", marginTop: "8px", padding: "8px" }}
+    />
+
+    <input
+      value={editEvent?.contact || ""}
+      onChange={(e) =>
+        setEditEvent({ ...editEvent, contact: e.target.value })
+      }
+      style={{ width: "100%", marginTop: "8px", padding: "8px" }}
+    />
+
+    <button
+      onClick={async () => {
+        await fetch("/api/monday", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id: editEvent.id,
+            title: editEvent.title,
+            brand: editEvent.brand,
+            niche: editEvent.niche,
+            social: editEvent.social,
+            contact: editEvent.contact
+          })
+        });
+
+        await fetchMonday();
+        setShowEditForm(false);
+        setEditEvent(null);
+      }}
+      style={{
+        marginTop: "10px",
+        background: "#66C6C4",
+        padding: "10px",
+        width: "100%"
+      }}
+    >
+      ✅ Save
+    </button>
+
+    
+<button
+  onClick={() => {
+    setShowEditForm(false);
+    setEditEvent(null);
+  }}
+  style={{
+    marginTop: "5px",
+    background: "#ccc",
+    padding: "8px",
+    width: "100%"
+  }}
+>
+  Cancel
+</button>
+
+
+
+</div> 
+
+)}
+
+</div> 
 );
 }

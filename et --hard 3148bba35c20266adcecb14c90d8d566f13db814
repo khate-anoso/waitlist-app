@@ -1,0 +1,277 @@
+[33mcommit bda6c32689dece0b1f60dfd9b65f1910b131e3ac[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Thu Jun 4 01:10:34 2026 -0500
+
+    fix: clean add/edit popup structure
+
+[33mcommit 3148bba35c20266adcecb14c90d8d566f13db814[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Thu Jun 4 00:30:31 2026 -0500
+
+    step 2: replaced edit button logic
+
+[33mcommit 6937e9cf99125a5cdd3933a95d057d7450299fa2[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Thu Jun 4 00:23:13 2026 -0500
+
+    feat: add status selector in add event popup
+
+[33mcommit d064e63b41401120149b8f24fb26f22feb47aac2[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Thu Jun 4 00:19:16 2026 -0500
+
+    fix: add event popup fully working
+
+[33mcommit 921c88e7f23012f2a860bbabb918fcf6945a3612[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Thu Jun 4 00:11:37 2026 -0500
+
+    feat: edit and delete moved inside popup
+
+[33mcommit 05869a4b6726f8ba0fa7a21349a1de9cde5c25d4[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Thu Jun 4 00:08:22 2026 -0500
+
+    feat: popup now appears near clicked event
+
+[33mcommit 9c359aff79a4679e95f386c98d3cac332c9a3ebb[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Thu Jun 4 00:02:35 2026 -0500
+
+    fix: better fallback for empty monday values
+
+[33mcommit f7ffe7be9c4cedbbb2f608b99813fa168bb8f1ea[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 23:59:54 2026 -0500
+
+    fix: confirmed data issue, UI working
+
+[33mcommit 1caa92505d9c434c30a3b36d76b854e19e70b33f[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 23:52:15 2026 -0500
+
+    fix: dynamic detection for brand and social
+
+[33mcommit 4ca42854c7b85217cce33bae81e69a335d280999[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 23:49:50 2026 -0500
+
+    fix: missing dateColumn causing mapping issue
+
+[33mcommit ac4e06a5225a492ab74987218f9f7636c5718113[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 23:44:33 2026 -0500
+
+    fix: move column mapping inside map
+
+[33mcommit 2094686a3d5d78da28a70eeb37bd0f179e5e2ce5[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 23:40:55 2026 -0500
+
+    fix: correct monday column mapping
+
+[33mcommit f975985295294ca673f895e69a109fce33a97846[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 23:38:43 2026 -0500
+
+    fix: add status to events
+
+[33mcommit 0af41d1e4b2f6c485d2f873317a7d28847f5675a[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 23:36:34 2026 -0500
+
+    debug: show all column values
+
+[33mcommit 5ac9b8ac3c035b2681d22d258d9d2af03989657f[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 23:34:09 2026 -0500
+
+    debug: force column mapping
+
+[33mcommit 1e3c02c7597748576963ae53ca4330a4ea6fdfea[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 23:31:36 2026 -0500
+
+    fix: prevent empty fields in events
+
+[33mcommit 0292bddcd1a3a27a88d587913ba2f82b7474a5cb[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 23:26:23 2026 -0500
+
+    fix: debugging monday columns
+
+[33mcommit 97780af9e27f6f14cbbedc83813eda61a285c5df[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 23:12:53 2026 -0500
+
+    fixed full event edit and monday columns
+
+[33mcommit 0167efec170b3ced43d088783a33d3baf1288d4b[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 23:03:34 2026 -0500
+
+    full event editing working
+
+[33mcommit 593b889cc195835c108eba0d0d01db3e6a15454a[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 22:59:24 2026 -0500
+
+    remove duplicate button
+
+[33mcommit c84c9b22652ac187f84c13da62e64950ed2a97df[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 21:41:58 2026 -0500
+
+    fix res duplicate
+
+[33mcommit 44518e7ce294b30173ac98f1690cd35a45f3a61f[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 21:37:56 2026 -0500
+
+    auto refresh every 3 seconds
+
+[33mcommit cb6036bbf5ec4abf0db24f2e06111fa8803e0b40[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 21:31:03 2026 -0500
+
+    real-time refresh added
+
+[33mcommit cbff769d6682a8fcaa5fe096f4f132abb6eb292e[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 21:18:54 2026 -0500
+
+    final fix monday sync clean
+
+[33mcommit 500ecc4766247c01a1b2b711a29e4dcf3a230196[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 21:07:55 2026 -0500
+
+    connect edit delete to monday
+
+[33mcommit a4284e326f3f87b593d3b9f9ecd3d76e2aca7595[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 20:57:22 2026 -0500
+
+    add edit delete buttons
+
+[33mcommit 4ccf80e5902830a65e66a85a8b3ff9c7a5690d43[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 20:45:16 2026 -0500
+
+    fix missing main flex div
+
+[33mcommit 8a122d86a79c3dc2def5a77b0db02dd7a19e930d[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 20:43:49 2026 -0500
+
+    fix missing div finally
+
+[33mcommit 09cdcd01691d43f680830c0450036e48c34b53ed[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 20:37:07 2026 -0500
+
+    fix layout structure properly
+
+[33mcommit 2070efcf158c8c59459cd7fda62dbe24fb4ebaec[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 20:33:38 2026 -0500
+
+    fix title + calendar click behavior
+
+[33mcommit 37dee349dfd24bdea52caae4750c720906cc2f7f[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 20:28:37 2026 -0500
+
+    force redeploy
+
+[33mcommit 68ce45ce08cff62016632381c14207b5eaf86a00[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 20:20:14 2026 -0500
+
+    ui cleanup + background click close
+
+[33mcommit a7d125573cbf6f76e6aba6d76e091bd9281578b4[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 20:13:22 2026 -0500
+
+    fix layout structure
+
+[33mcommit 36b05f1a22bfb2598c2c5d518d3497a67ff29b8c[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 20:10:44 2026 -0500
+
+    split layout left calendar right waitlist
+
+[33mcommit 73922c53f86d49b8718d6ac0ef918f9014eb6a6f[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 20:03:22 2026 -0500
+
+    remove invalid comment
+
+[33mcommit 6d4832dd5ef358fa926c8507d858fd3acafb7ca9[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 19:57:46 2026 -0500
+
+    add event details popup
+
+[33mcommit b096e615fc12d0bf7d45fa2d65ec9466b7a7e132[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 19:43:59 2026 -0500
+
+    fix niche column id
+
+[33mcommit b6436149eedddd2e30b40752997787549ce7c3b4[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 19:38:46 2026 -0500
+
+    fix niche column final
+
+[33mcommit b11efa5ea3c4827d3472e7b9d9e6046bd282ba1b[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 19:35:53 2026 -0500
+
+    fix niche mapping final
+
+[33mcommit a0d73f915f4142670e21fe7d8d551ff3cddfa564[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 19:33:39 2026 -0500
+
+    fix niche column
+
+[33mcommit f701bb2fc0a5f22ed76016c69d4adc2ca4d0507b[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 19:29:06 2026 -0500
+
+    add input fields
+
+[33mcommit c200c4edf7af38c59ef37ec128c950d94cac2c45[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 19:24:52 2026 -0500
+
+    add missing states
+
+[33mcommit da553eef9c68835f313517baf13f6272b233f6ad[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 19:23:10 2026 -0500
+
+    add niche column
+
+[33mcommit 5b28ff7a5e9fda4e2f22a3c41371b6d7bae1fe01[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 19:10:40 2026 -0500
+
+    sync status column
+
+[33mcommit 4835c62a636e2bcb8a3f100189f694776096b529[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 19:00:40 2026 -0500
+
+    fix double filter bug
+
+[33mcommit c62a0386a9568d62fa114fafc8227fddc3c7b2e6[m
+Author: Khate <khate@2degreesconnections.com>
+Date:   Wed Jun 3 18:57:24 2026 -0500
+
+    fix date bug
+
+[33mcommit 3d52b6e93da12230e0b37eca07697eed
