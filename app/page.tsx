@@ -56,17 +56,21 @@ const dateColumn = item.column_values.find(
   (col: any) => col.id === "color_mm3anqa3"
 );
 
+
 const brandCol = item.column_values.find(
-  (col: any) => col.id === "text_mm3avaff"
+  (col: any) => col.text && col.text.toLowerCase().includes("brand")
 );
+
 
 const nicheCol = item.column_values.find(
   (col: any) => col.id === "text_mm404sek"
 );
 
+
 const socialCol = item.column_values.find(
-  (col: any) => col.id === "link_mm3vbwmx"
+  (col: any) => col.text && col.text.includes("http")
 );
+
 
 const contactCol = item.column_values.find(
   (col: any) => col.id === "text_mm3ad018"
