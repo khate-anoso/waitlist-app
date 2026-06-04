@@ -58,7 +58,7 @@ const dateColumn = item.column_values.find(
 
 
 const brandCol = item.column_values.find(
-  (col: any) => col.text && col.text.toLowerCase().includes("brand")
+  (col: any) => col.id === "text_mm3ayaff"
 );
 
 
