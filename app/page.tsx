@@ -538,7 +538,7 @@ await fetchMonday();
   setNewEventTitle("");
 
  
-  const res = await fetch("/api/monday", {
+  const response = await fetch("/api/monday", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -554,7 +554,7 @@ await fetchMonday();
 })
   });
 
-  const data = await res.json();
+  const data = await response.json();
   console.log("MONDAY RESPONSE:", data);
   await fetchMonday();
 }}
