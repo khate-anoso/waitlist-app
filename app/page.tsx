@@ -372,7 +372,7 @@ onClick={() => {
         {eventsForDay.map((event, i) => (
   <div
     key={i}
-    onClick={() => setActiveEvent(event)} ✅ ADD THIS
+    onClick={() => setActiveEvent(event)} 
     style={{
       marginTop: "3px",
       padding: "2px 4px",
