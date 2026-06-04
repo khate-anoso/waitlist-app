@@ -597,72 +597,7 @@ onClick={(e) => {
       
       {event.title}
 
-      <div style={{ display: "flex", gap: "5px", marginTop: "5px" }}>
-
-        <button
-          onClick={async () => {
-            const newTitle = prompt("Edit title", event.title);
-if (!newTitle) return;
-
-const newBrand = prompt("Edit brand", event.brand || "");
-const newNiche = prompt("Edit niche", event.niche || "");
-const newSocial = prompt("Edit social", event.social || "");
-const newContact = prompt("Edit contact", event.contact || "");
-
-            const updatedEvents = [...calendarEvents];
-
-updatedEvents[index] = {
-  ...updatedEvents[index],
-  title: newTitle,
-  brand: newBrand,
-  niche: newNiche,
-  social: newSocial,
-  contact: newContact
-};
-
-setCalendarEvents(updatedEvents);
-            
-
-            await fetch("/api/monday", {
-  method: "PUT",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    id: event.id,
-    title: newTitle,
-    brand: newBrand,
-    niche: newNiche,
-    social: newSocial,
-    contact: newContact
-  })
-});
-            await fetchMonday();
-          }}
-          style={{ fontSize: "10px", padding: "3px", cursor: "pointer" }}
-        >
-          ✏️
-        </button>
-
-        <button
-          onClick={async () => {
-            const filtered = calendarEvents.filter((_, i) => i !== index);
-            setCalendarEvents(filtered);
-
-            await fetch("/api/monday", {
-              method: "DELETE",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                id: event.id
-              })
-            });
-            await fetchMonday();
-          }}
-          style={{ fontSize: "10px", padding: "3px", cursor: "pointer" }}
-        >
-          🗑️
-        </button>
-
-      </div>
-
+      
     </div>
 ))}
 
@@ -1301,6 +1236,68 @@ transform: "translate(-50%, -50%)",
           zIndex: 999
         }}>
           <h3>{activeEvent.title}</h3>
+          <button
+  onClick={async () => {
+    const newTitle = prompt("Edit title", activeEvent.title);
+    if (!newTitle) return;
+
+    const newBrand = prompt("Edit brand", activeEvent.brand || "");
+    const newNiche = prompt("Edit niche", activeEvent.niche || "");
+    const newSocial = prompt("Edit social", activeEvent.social || "");
+    const newContact = prompt("Edit contact", activeEvent.contact || "");
+
+    await fetch("/api/monday", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: activeEvent.id,
+        title: newTitle,
+        brand: newBrand,
+        niche: newNiche,
+        social: newSocial,
+        contact: newContact
+      })
+    });
+
+    await fetchMonday();
+    setActiveEvent(null);
+  }}
+  style={{
+    marginTop: "10px",
+    background: "#FFC774",
+    padding: "8px",
+    borderRadius: "8px",
+    border: "none",
+    cursor: "pointer"
+  }}
+>
+  ✏️ Edit
+</button>
+<button
+  onClick={async () => {
+    await fetch("/api/monday", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: activeEvent.id
+      })
+    });
+
+    await fetchMonday();
+    setActiveEvent(null);
+  }}
+  style={{
+    marginTop: "8px",
+    background: "#EF5D41",
+    color: "#fff",
+    padding: "8px",
+    borderRadius: "8px",
+    border: "none",
+    cursor: "pointer"
+  }}
+>
+  🗑️ Delete
+</button>
 
           <p><b>Status:</b> {activeEvent.status}</p>
           <p><b>Brand:</b> {activeEvent.brand}</p>
