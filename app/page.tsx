@@ -78,11 +78,12 @@ const contactCol = item.column_values.find(
   id: item.id,
   title: item.name,
   date: date,
-  brand: brandCol?.text || "—",
-  niche: nicheCol?.text || "—",
-  social: socialCol?.text || "—",
-  contact: contactCol?.text || "—"
+brand: item.column_values[2]?.text,
+  niche: item.column_values[3]?.text,
+  social: item.column_values[4]?.text,
+  contact: item.column_values[5]?.text
 };
+
 
 }).filter((event: any) => event.date);
 
