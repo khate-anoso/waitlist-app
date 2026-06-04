@@ -39,7 +39,7 @@ const query = `
 export async function POST(req: Request) {
   const body = await req.json();
 
-  const { name, date, group } = body;
+  const { name, date, group, brand, niche, social, contact } = body;
   const statusMap: any = {
   topics: "Idea",
   group_mm3ahc7c: "Outreach",
@@ -51,10 +51,19 @@ export async function POST(req: Request) {
 
   const safeName = name.replace(/"/g, '\\"');
 
-  const columnValues = JSON.stringify({
+  
+const columnValues = JSON.stringify({
   date_mm3a5hvm: { date },
-  color_mm3anqa3: { label: statusMap[group] }
+  color_mm3anqa3: { label: statusMap[group] },
+
+  text_mm3ayaff: brand,          
+  text_mm3mf4yc0: niche,          
+  text_mm3ad018: contact,         
+  link_mm3ybwmx: { url: social, text: social } 
+
 }).replace(/"/g, '\\"');
+
+
 
   const query = `
     mutation {

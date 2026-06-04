@@ -429,7 +429,11 @@ onClick={async () => {
     body: JSON.stringify({
   name: newEventTitle,
   date: date,
-  group: selectedGroup
+  group: selectedGroup,
+  brand: brand,
+  niche: niche,
+  social: social,
+  contact: contact
 })
   });
 
