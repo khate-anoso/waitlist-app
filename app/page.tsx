@@ -90,9 +90,9 @@ return {
   title: item.name,
   date: date,
   status: statusCol?.text || "—",
-  brand: brandCol?.text || "—",
+  brand: brandCol?.text && brandCol.text.trim() !== "" ? brandCol.text : "(no brand)",
   niche: nicheCol?.text || "—",
-  social: socialCol?.text || "—",
+  social: socialCol?.text && socialCol.text.trim() !== "" ? socialCol.text : "(no social)",
   contact: contactCol?.text || "—"
 };
 
