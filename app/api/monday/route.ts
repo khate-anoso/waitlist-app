@@ -40,12 +40,21 @@ export async function POST(req: Request) {
   const body = await req.json();
 
   const { name, date, group } = body;
+  const statusMap: any = {
+  topics: "Idea",
+  group_mm3ahc7c: "Outreach",
+  group_mm3a2tx5: "Confirmed",
+  group_mm3an27k: "Completed"
+};
+``
+
 
   const safeName = name.replace(/"/g, '\\"');
 
   const columnValues = JSON.stringify({
-    date_mm3a5hvm: { date }
-  }).replace(/"/g, '\\"');
+  date_mm3a5hvm: { date },
+  color_mm3anqa3: { label: statusMap[group] }
+}).replace(/"/g, '\\"');
 
   const query = `
     mutation {
