@@ -772,7 +772,7 @@ onClick={() => {
 )}
 
         {/* POPUP */}
-        </div>
+        
         {selectedUser && (
   <div style={{
     position: "fixed",
@@ -1183,7 +1183,7 @@ maxHeight: "90vh",
     </div>
   
 )}
-
+</div>
       </div>
 
       {activeEvent && (
