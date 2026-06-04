@@ -74,15 +74,31 @@ const contactCol = item.column_values.find(
     date = parsed?.date;
   }
 
-  return {
+  const brandCol = item.column_values.find(
+  (col: any) => col.id === "text_mm3avaff"
+);
+
+const nicheCol = item.column_values.find(
+  (col: any) => col.id === "text_mm404sek"
+);
+
+const socialCol = item.column_values.find(
+  (col: any) => col.id === "link_mm3vbwmx"
+);
+
+const contactCol = item.column_values.find(
+  (col: any) => col.id === "text_mm3ad018"
+);
+
+return {
   id: item.id,
   title: item.name,
   date: date,
-status: item.group?.title,
-brand: JSON.stringify(item.column_values),
-  niche: "",
-  social: "",
-  contact: ""
+  status: item.group?.title,
+  brand: brandCol?.text || "—",
+  niche: nicheCol?.text || "—",
+  social: socialCol?.text || "—",
+  contact: contactCol?.text || "—"
 };
 
 
