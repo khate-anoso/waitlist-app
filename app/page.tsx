@@ -1163,45 +1163,45 @@ maxHeight: "90vh",
 )}
 
       </div>
+
+      {activeEvent && (
+        <div style={{
+          position: "fixed",
+          bottom: "20px",
+          right: "20px",
+          background: "#fff",
+          padding: "20px",
+          borderRadius: "12px",
+          boxShadow: "0 4px 15px rgba(0,0,0,0.3)",
+          width: "300px",
+          zIndex: 999
+        }}>
+          <h3>{activeEvent.title}</h3>
+
+          <p><b>Status:</b> {activeEvent.status}</p>
+          <p><b>Brand:</b> {activeEvent.brand}</p>
+          <p><b>Niche:</b> {activeEvent.niche}</p>
+          <p><b>Social:</b> {activeEvent.social}</p>
+          <p><b>Contact:</b> {activeEvent.contact}</p>
+          <p><b>Date:</b> {activeEvent.date}</p>
+
+          <button
+            onClick={() => setActiveEvent(null)}
+            style={{
+              marginTop: "10px",
+              background: "#EF5D41",
+              color: "#fff",
+              border: "none",
+              padding: "8px",
+              borderRadius: "8px",
+              cursor: "pointer"
+            }}
+          >
+            Close
+          </button>
+        </div>
+      )}
+
     </div>
-    {activeEvent && (
-  <div style={{
-    position: "fixed",
-    bottom: "20px",
-    right: "20px",
-    background: "#fff",
-    padding: "20px",
-    borderRadius: "12px",
-    boxShadow: "0 4px 15px rgba(0,0,0,0.3)",
-    width: "300px",
-    zIndex: 999
-  }}>
-    <h3>{activeEvent.title}</h3>
-
-    <p><b>Status:</b> {activeEvent.status}</p>
-    <p><b>Brand:</b> {activeEvent.brand}</p>
-    <p><b>Niche:</b> {activeEvent.niche}</p>
-    <p><b>Social:</b> {activeEvent.social}</p>
-    <p><b>Contact:</b> {activeEvent.contact}</p>
-    <p><b>Date:</b> {activeEvent.date}</p>
-
-    <button
-      onClick={() => setActiveEvent(null)}
-      style={{
-        marginTop: "10px",
-        background: "#EF5D41",
-        color: "#fff",
-        border: "none",
-        padding: "8px",
-        borderRadius: "8px",
-        cursor: "pointer"
-      }}
-    >
-      Close
-    </button>
-  </div>
-)}
-
-  </div>
 );
 }
