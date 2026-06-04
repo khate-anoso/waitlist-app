@@ -44,27 +44,52 @@ const fetchMonday = async () => {
 
   setMondayItems(items);
 
-  const events = items.map((item: any) => {
-    const dateColumn = item.column_values.find(
-      (col: any) => col.id === "date_mm3a5hvm"
-    );
+  
+const events = items.map((item: any) => {
+  console.log("COLUMN VALUES:", item.column_values);
+  const dateColumn = item.column_values.find(
+    (col: any) => col.id === "date_mm3a5hvm"
+  );
 
-    let date = dateColumn?.text;
+  const brandCol = item.column_values.find(
+    (col: any) => col.id === "brand"
+  );
 
-    if (!date && dateColumn?.value) {
-      const parsed = JSON.parse(dateColumn.value);
-      date = parsed?.date;
-    }
+  const nicheCol = item.column_values.find(
+    (col: any) => col.id === "niche"
+  );
 
-    return {
-      id: item.id,
-      title: item.name,
-      date: date
-    };
-  }).filter((event: any) => event.date);
+  const socialCol = item.column_values.find(
+    (col: any) => col.id === "social"
+  );
 
-  setCalendarEvents(events);
+  const contactCol = item.column_values.find(
+    (col: any) => col.id === "contact"
+  );
+
+  let date = dateColumn?.text;
+
+  if (!date && dateColumn?.value) {
+    const parsed = JSON.parse(dateColumn.value);
+    date = parsed?.date;
+  }
+
+  return {
+    id: item.id,
+    title: item.name,
+    date: date,
+    brand: brandCol?.text,
+    niche: nicheCol?.text,
+    social: socialCol?.text,
+    contact: contactCol?.text
+  };
+
+}).filter((event: any) => event.date);
+
+setCalendarEvents(events);
+
 };
+
 
 useEffect(() => {
   const fetchData = async () => {
@@ -571,7 +596,7 @@ updatedEvents[index] = {
 };
 
 setCalendarEvents(updatedEvents);
-            setCalendarEvents(updatedEvents);
+            
 
             await fetch("/api/monday", {
   method: "PUT",
