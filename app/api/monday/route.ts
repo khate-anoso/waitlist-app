@@ -56,12 +56,13 @@ const columnValues = JSON.stringify({
   date_mm3a5hvm: { date },
   color_mm3anqa3: { label: statusMap[group] },
 
-  text_mm3ayaff: brand,          
-  text_mm3mf4yc0: niche,          
-  text_mm3ad018: contact,         
-  link_mm3ybwmx: { url: social, text: social } 
+  text_mm3ayaff: brand || "",
+  text_mm3mf4yc0: niche || "",          // ✅ FIXED
+  text_mm3ad018: contact || "",
+  link_mm3ybwmx: { url: social || "", text: social || "" }
 
 }).replace(/"/g, '\\"');
+
 
 
 
