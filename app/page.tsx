@@ -551,24 +551,40 @@ onClick={() => {
 
         <button
           onClick={async () => {
-            const updated = prompt("Edit title", event.title);
-            if (!updated) return;
+            const newTitle = prompt("Edit title", event.title);
+if (!newTitle) return;
+
+const newBrand = prompt("Edit brand", event.brand || "");
+const newNiche = prompt("Edit niche", event.niche || "");
+const newSocial = prompt("Edit social", event.social || "");
+const newContact = prompt("Edit contact", event.contact || "");
 
             const updatedEvents = [...calendarEvents];
-            updatedEvents[index] = {
-              ...updatedEvents[index],
-              title: updated
-            };
+
+updatedEvents[index] = {
+  ...updatedEvents[index],
+  title: newTitle,
+  brand: newBrand,
+  niche: newNiche,
+  social: newSocial,
+  contact: newContact
+};
+
+setCalendarEvents(updatedEvents);
             setCalendarEvents(updatedEvents);
 
             await fetch("/api/monday", {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                id: event.id,
-                newTitle: updated
-              })
-            });
+  method: "PUT",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    id: event.id,
+    title: newTitle,
+    brand: newBrand,
+    niche: newNiche,
+    social: newSocial,
+    contact: newContact
+  })
+});
             await fetchMonday();
           }}
           style={{ fontSize: "10px", padding: "3px", cursor: "pointer" }}
