@@ -35,6 +35,7 @@ const [social, setSocial] = useState("");
 const [contact, setContact] = useState("");
 const [selectedGroup, setSelectedGroup] = useState("topics");
 const [activeEvent, setActiveEvent] = useState<any>(null);
+const [showAddForm, setShowAddForm] = useState(false);
 const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 });
 
 const fetchMonday = async () => {
@@ -465,121 +466,16 @@ onClick={(e) => {
   Close
 </button>
 
-    <input
-  type="text"
-  placeholder="Add interview..."
-  value={newEventTitle}
-  onChange={(e) => setNewEventTitle(e.target.value)}
+   <button
+  onClick={() => setShowAddForm(true)}
   style={{
-    width: "100%",
-    padding: "8px",
     marginTop: "10px",
-    borderRadius: "6px",
-    border: "1px solid #ccc"
-  }}
-/>
-
-<input
-  type="text"
-  placeholder="Brand / Company"
-  value={brand}
-  onChange={(e) => setBrand(e.target.value)}
-  style={{
-    width: "100%",
+    background: "#8C84D9",
+    color: "#fff",
     padding: "8px",
-    marginTop: "10px",
-    borderRadius: "6px",
-    border: "1px solid #ccc"
-  }}
-/>
-
-<input
-  type="text"
-  placeholder="Niche"
-  value={niche}
-  onChange={(e) => setNiche(e.target.value)}
-  style={{
-    width: "100%",
-    padding: "8px",
-    marginTop: "10px",
-    borderRadius: "6px",
-    border: "1px solid #ccc"
-  }}
-/>
-
-<input
-  type="text"
-  placeholder="Social Handle"
-  value={social}
-  onChange={(e) => setSocial(e.target.value)}
-  style={{
-    width: "100%",
-    padding: "8px",
-    marginTop: "10px",
-    borderRadius: "6px",
-    border: "1px solid #ccc"
-  }}
-/>
-
-<input
-  type="text"
-  placeholder="Contact Info"
-  value={contact}
-  onChange={(e) => setContact(e.target.value)}
-  style={{
-    width: "100%",
-    padding: "8px",
-    marginTop: "10px",
-    borderRadius: "6px",
-    border: "1px solid #ccc"
-  }}
-/>
-
-
-<select
-  value={selectedGroup}
-  onChange={(e) => setSelectedGroup(e.target.value)}
-  style={{
-    width: "100%",
-    padding: "8px",
-    marginTop: "10px",
-    borderRadius: "6px"
-  }}
->
-  <option value="topics">Ideas</option>
-  <option value="group_mm3ahc7c">Outreach</option>
-  <option value="group_mm3a2tx5">Confirmed</option>
-  <option value="group_mm3an27k">Completed</option>
-</select>
-
-
-<button
-  onClick={async () => {
-    if (!newEventTitle) return;
-
-    const date = `2026-06-${selectedDay.toString().padStart(2, "0")}`;
-
-    console.log("SENDING:", newEventTitle, date);
-
-    const res = await fetch("/api/monday", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: newEventTitle,
-        date: date,
-        group: selectedGroup,
-        brand,
-        niche,
-        social,
-        contact
-      })
-    });
-
-    await res.json();
-
-    await fetchMonday();
-
-    setNewEventTitle("");
+    borderRadius: "8px",
+    border: "none",
+    cursor: "pointer"
   }}
 >
   ➕ Add Event
@@ -1322,6 +1218,119 @@ transform: "translate(-50%, -50%)",
           </button>
         </div>
       )}
+{showAddForm && (
+  <div
+    style={{
+      position: "fixed",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      background: "#fff",
+      padding: "20px",
+      borderRadius: "12px",
+      boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+      width: "300px",
+      zIndex: 1000
+    }}
+  >
+    <h3>Add Event</h3>
+
+    <input
+      placeholder="Title"
+      value={newEventTitle}
+      onChange={(e) => setNewEventTitle(e.target.value)}
+      style={{ width: "100%", marginTop: "8px", padding: "8px" }}
+    />
+
+    <input
+      placeholder="Brand"
+      value={brand}
+      onChange={(e) => setBrand(e.target.value)}
+      style={{ width: "100%", marginTop: "8px", padding: "8px" }}
+    />
+
+    <input
+      placeholder="Niche"
+      value={niche}
+      onChange={(e) => setNiche(e.target.value)}
+      style={{ width: "100%", marginTop: "8px", padding: "8px" }}
+    />
+
+    <input
+      placeholder="Social"
+      value={social}
+      onChange={(e) => setSocial(e.target.value)}
+      style={{ width: "100%", marginTop: "8px", padding: "8px" }}
+    />
+
+    <input
+      placeholder="Contact"
+      value={contact}
+      onChange={(e) => setContact(e.target.value)}
+      style={{ width: "100%", marginTop: "8px", padding: "8px" }}
+    />
+
+    <button
+      onClick={async () => {
+        if (!selectedDay || !newEventTitle) return;
+
+        const date = `2026-06-${selectedDay
+          .toString()
+          .padStart(2, "0")}`;
+
+        await fetch("/api/monday", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: newEventTitle,
+            date,
+            group: selectedGroup,
+            brand,
+            niche,
+            social,
+            contact
+          })
+        });
+
+        await fetchMonday();
+
+        setShowAddForm(false);
+        setNewEventTitle("");
+        setBrand("");
+        setNiche("");
+        setSocial("");
+        setContact("");
+      }}
+      style={{
+        marginTop: "10px",
+        background: "#66C6C4",
+        padding: "10px",
+        borderRadius: "8px",
+        border: "none",
+        cursor: "pointer",
+        width: "100%"
+      }}
+    >
+      ✅ Save
+    </button>
+
+    <button
+      onClick={() => setShowAddForm(false)}
+      style={{
+        marginTop: "5px",
+        background: "#ccc",
+        padding: "8px",
+        borderRadius: "8px",
+        border: "none",
+        cursor: "pointer",
+        width: "100%"
+      }}
+    >
+      Cancel
+    </button>
+  </div>
+)}
+``
 
     </div>
 );
