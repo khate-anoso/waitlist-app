@@ -96,6 +96,7 @@ const events = items.map((item: any) => {
   }
 
   return {
+    id: item.id,
     title: item.name,
     date: date,
     status: statusColumn?.text,
@@ -583,7 +584,33 @@ onClick={async () => {
         
         <button
           onClick={() => {
-            const updated = prompt("Edit title", event.title);
+            <button
+  onClick={async () => {
+    const updated = prompt("Edit title", event.title);
+    if (!updated) return;
+
+    // ✅ update UI
+    const updatedEvents = [...calendarEvents];
+    updatedEvents[index] = {
+      ...updatedEvents[index],
+      title: updated
+    };
+    setCalendarEvents(updatedEvents);
+
+    // ✅ send to Monday
+    await fetch("/api/monday", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: event.id,
+        newTitle: updated
+      })
+    });
+  }}
+>
+  ✏️
+</button>
+
             if (!updated) return;
 
             const updatedEvents = [...calendarEvents];
@@ -604,8 +631,24 @@ onClick={async () => {
         </button>
 
         <button
-          onClick={() => {
-            const filtered = calendarEvents.filter((_, i) => i !== index);
+  onClick={async () => {
+    // ✅ update UI
+    const filtered = calendarEvents.filter((_, i) => i !== index);
+    setCalendarEvents(filtered);
+
+    // ✅ delete from Monday
+    await fetch("/api/monday", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: event.id
+      })
+    });
+  }}
+>
+  🗑️
+</button>
+
             setCalendarEvents(filtered);
           }}
           style={{

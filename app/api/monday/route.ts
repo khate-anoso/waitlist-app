@@ -45,7 +45,62 @@ export async function POST(req: Request) {
   group_mm3ahc7c: "Outreach",
   group_mm3a2tx5: "Confirmed",
   group_mm3an27k: "Completed"
-};
+}
+// ✅ EDIT EVENT
+export async function PUT(req: Request) {
+  const body = await req.json();
+  const { id, newTitle } = body;
+
+  const query = `
+    mutation {
+      change_multiple_column_values(
+        item_id: ${id},
+        board_id: 18412930770,
+        column_values: "{\\"name\\": \\"${newTitle}\\"}"
+      ) {
+        id
+      }
+    }
+  `;
+
+  await fetch("https://api.monday.com/v2", {
+    method: "POST",
+    headers: {
+      Authorization: process.env.MONDAY_API_KEY!,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ query })
+  });
+
+  return Response.json({ success: true });
+}
+
+
+// ✅ DELETE EVENT
+export async function DELETE(req: Request) {
+  const body = await req.json();
+  const { id } = body;
+
+  const query = `
+    mutation {
+      delete_item(item_id: ${id}) {
+        id
+      }
+    }
+  `;
+
+  await fetch("https://api.monday.com/v2", {
+    method: "POST",
+    headers: {
+      Authorization: process.env.MONDAY_API_KEY!,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ query })
+  });
+
+  return Response.json({ success: true });
+}
+;
 ``
 
 
