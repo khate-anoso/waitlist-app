@@ -18,6 +18,7 @@ type User = {
 export default function Home() {
 
 const [users, setUsers] = useState<any[]>([]);
+const [status, setStatus] = useState("");
 const [selectedUser, setSelectedUser] = useState<any>(null);
 const [search, setSearch] = useState("");
 const [isEditing, setIsEditing] = useState(false);
@@ -28,6 +29,8 @@ const letterRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
 const [calendarEvents, setCalendarEvents] = useState<any[]>([]);
 const [selectedDay, setSelectedDay] = useState<number | null>(null); 
+const [currentMonth, setCurrentMonth] = useState(5); // June (0-based)
+const [currentYear] = useState(2026);
 const [newEventTitle, setNewEventTitle] = useState("");
 const [brand, setBrand] = useState("");
 const [niche, setNiche] = useState("");
@@ -41,104 +44,95 @@ const [editEvent, setEditEvent] = useState<any>(null);
 
 const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 });
 
-const fetchMonday = async () => {
-  const res = await fetch("/api/monday");
-  
-const data = await res.json();
-console.log("MONDAY DATA:", data);
-
-const items =
-  data?.data?.boards?.[0]?.items_page?.items || [];
-
-setMondayItems(items);
-
-
-  
-const events = items.map((item: any) => {
-
-const dateColumn = item.column_values.find(
-  (col: any) => col.id === "date_mm3a5hvm"
-);
-
-
-  const statusCol = item.column_values.find(
-  (col: any) => col.id === "color_mm3anqa3"
-);
-
-
-const brandCol = item.column_values.find(
-  (col: any) => col.id === "text_mm3ayaff"
-);
-
-
-const nicheCol = item.column_values.find(
-  (col: any) => col.id === "text_mm404sek"
-);
-
-
-const socialCol = item.column_values.find(
-  (col: any) => col.text && col.text.includes("http")
-);
-
-
-const contactCol = item.column_values.find(
-  (col: any) => col.id === "text_mm3ad018"
-);
-
-
-  let date = dateColumn?.text;
-
-  if (!date && dateColumn?.value) {
-    const parsed = JSON.parse(dateColumn.value);
-    date = parsed?.date;
-  }
-
-  
-return {
-  id: item.id,
-  title: item.name,
-  date: date,
-  status: statusCol?.text || "—",
-  brand: brandCol?.text && brandCol.text.trim() !== "" ? brandCol.text : "(no brand)",
-  niche: nicheCol?.text || "—",
-  social: socialCol?.text && socialCol.text.trim() !== "" ? socialCol.text : "(no social)",
-  contact: contactCol?.text || "—"
+const getGroupFromStatus = (status: string) => {
+  if (status === "Idea") return "topics";
+  if (status === "Outreach") return "group_mm3ahc7c";
+  if (status === "Confirmed") return "group_mm3a2tx5";
+  if (status === "Completed") return "group_mm3an27k";
+  return "topics";
 };
 
+const fetchMonday = async () => {
+  const res = await fetch("/api/monday");
+  const data = await res.json();
 
-}).filter((event: any) => event.date);
+  const items =
+  data?.data?.boards?.[0]?.items_page?.items || [];
 
-setCalendarEvents(events);
 
+    console.log("✅ ITEMS NOW:", items);
+
+  const events = items.map((item: any) => {
+    console.log("COLUMNS 👉", item.column_values);
+   const dateColumn = item.column_values.find(
+  (col: any) => col.value && col.value.includes("date")
+);
+
+    const statusCol = item.column_values.find(
+      (col: any) => col.id === "color_mm3anqa3"
+    );
+    console.log("STATUS RAW 👉", statusCol);
+
+    const brandCol = item.column_values.find(
+      (col: any) => col.id === "text_mm3ayaff"
+    );
+
+    const nicheCol = item.column_values.find(
+      (col: any) => col.id === "text_mm404sek"
+    );
+
+    const socialCol = item.column_values.find(
+      (col: any) => col.text && col.text.includes("http")
+    );
+
+    const contactCol = item.column_values.find(
+      (col: any) => col.id === "text_mm3ad018"
+    );
+
+    let date = "";
+
+if (dateColumn?.value) {
+  try {
+    const parsed = JSON.parse(dateColumn.value);
+    date = parsed?.date || "";
+  } catch {}
+}
+
+if (!date && dateColumn?.text) {
+  date = new Date(dateColumn.text).toISOString();
+}
+
+    return {
+      id: item.id,
+      title: item.name,
+      date,
+      status: statusCol?.text || "—",
+      brand: brandCol?.text || "(no brand)",
+      niche: nicheCol?.text || "—",
+      social: socialCol?.text || "(no social)",
+      contact: contactCol?.text || "—"
+    };
+  });
+
+  setCalendarEvents(events);
 };
 
 
 useEffect(() => {
-  const fetchData = async () => {
-    const res = await fetch("https://sheetdb.io/api/v1/axmaxulx9jy0s");
-    const data = await res.json();
+  reloadData();   
 
-    if (Array.isArray(data)) {
-      setUsers(data);
-    } else {
-      setUsers([]);
-    }
-  };
-
-  fetchData();
-
-  // ✅ initial load
   fetchMonday();
 
-  // ✅ auto refresh every 3 seconds
   const interval = setInterval(() => {
     fetchMonday();
-  }, 3000);
+  }, 5000);
 
-  // ✅ cleanup (important)
   return () => clearInterval(interval);
 }, []);
-
+useEffect(() => {
+  if (currentMonth < 0) setCurrentMonth(11);
+  if (currentMonth > 11) setCurrentMonth(0);
+}, [currentMonth]);
 
 const [activeFilter, setActiveFilter] = useState("All");
 
@@ -280,16 +274,7 @@ return (
 >
 
 
-    {/* SIDEBAR */}
-    <div style={{
-      
-      backgroundColor: "#1C132D",
-      color: "white",
-      padding: "20px"
-    }}>
-    
-
-</div>
+ 
   
 <div style={{
   position: "fixed",        
@@ -361,14 +346,79 @@ onClick={() => {
 
 
 
-      <div style={{ flex: 1 }}>
+      <div style={{
+  flex: 1,
+  display: "flex",
+  flexDirection: "column"
+}}>
+
 
         
-<div style={{ marginTop: "20px" }}>
+<div>
   
+<h2 style={{
+  textAlign: "center",
+  color: "#1C132D",
+  marginBottom: "10px"
+}}>
+  Interview Schedule
+</h2>
+
 
 <div style={{ marginTop: "30px" }}>
-  <h2 style={{ color: "#1C132D" }}>📅 Interview Calendar</h2>
+  <div
+  style={{
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: "30px"
+  }}
+>
+  <div style={{
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  marginBottom: "10px"
+}}>
+  <button onClick={() => setCurrentMonth(prev => prev - 1)}>
+    ⬅️
+  </button>
+
+  <h2 style={{ margin: 0 }}>
+    📅 {new Date(currentYear, currentMonth).toLocaleString("default", { month: "long" })} {currentYear}
+  </h2>
+
+  <button onClick={() => setCurrentMonth(prev => prev + 1)}>
+    ➡️
+  </button>
+</div>
+
+  <button
+   onClick={() => {
+  if (!selectedDay) {
+    alert("Please select a date first 📅");
+    return;
+  }
+
+  setShowEditForm(false);
+  setActiveEvent(null);
+  setShowAddForm(true);
+}}
+
+    style={{
+      background: "#5FB3B3",
+      color: "#fff",
+      padding: "8px 14px",
+      borderRadius: "8px",
+      border: "none",
+      cursor: "pointer",
+      fontSize: "13px",
+      fontWeight: "500"
+    }}
+  >
+    ➕ Add Event
+  </button>
+</div>
 
   <div
   style={{
@@ -381,9 +431,18 @@ onClick={() => {
   {Array.from({ length: 30 }).map((_, dayIndex) => {
     const day = dayIndex + 1;
 
-    const eventsForDay = calendarEvents.filter(event =>
-  parseInt(event.date.split("-")[2]) === day
-);
+  const eventsForDay = calendarEvents.filter(event => {
+  if (!event.date) return false;
+
+  const [year, month, dayStr] = event.date.split("-");
+  const eventDay = parseInt(dayStr);
+
+  return (
+    parseInt(month) === currentMonth + 1 &&
+    parseInt(year) === currentYear &&
+    eventDay === day
+  );
+});
 
     return (
   
@@ -391,7 +450,11 @@ onClick={() => {
   key={day}
   onClick={(e) => {
     e.stopPropagation();
-    setSelectedDay(day);
+    setShowAddForm(false);
+setShowEditForm(false);
+setActiveEvent(null);
+setSelectedDay(day);
+
   }}
 
     style={{
@@ -420,7 +483,9 @@ onClick={(e) => {
     y: e.clientY
   });
 
-  setActiveEvent(event);
+  setShowAddForm(false);
+setShowEditForm(false);
+setActiveEvent(event);
 }}
 
     style={{
@@ -441,80 +506,34 @@ onClick={(e) => {
   })}
 </div>
 </div>
-<h2 style={{
-  marginTop: "20px", 
-  color: "#1C132D",
-  textAlign: "center"
-}}>
-  Waitlist Dashboard
-</h2>
-{selectedDay && (
-  <div
-    onClick={(e) => e.stopPropagation()}
-    style={{
-    marginTop: "20px",
-    background: "#fff",
-    padding: "15px",
-    borderRadius: "10px",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.2)"
-  }}>
-    <h3>Events on Day {selectedDay}</h3>
-<button
-  onClick={() => setSelectedDay(null)}
-  style={{
-    marginTop: "10px",
-    background: "#ccc",
-    border: "none",
-    padding: "6px 10px",
-    borderRadius: "6px",
-    cursor: "pointer"
-  }}
->
-  Close
-</button>
 
-   <button
-  onClick={() => setShowAddForm(true)}
-  style={{
-    marginTop: "10px",
-    background: "#8C84D9",
-    color: "#fff",
-    padding: "8px",
-    borderRadius: "8px",
-    border: "none",
-    cursor: "pointer"
-  }}
->
-  ➕ Add Event
-</button>
-
- 
-  
-
-
-
-    {calendarEvents
-  .filter(event => parseInt(event.date.split("-")[2]) === selectedDay)
-  .map((event, index) => (
-    <div key={index} style={{ marginTop: "5px" }}>
-      
-      {event.title}
-
-      
-    </div>
-))}
-
-    {calendarEvents.filter(event =>
-  parseInt(event.date.split("-")[2]) === selectedDay
-).length === 0 && <p>No events</p>}
 
   </div>
-)}
 
+</div>
 
   
 </div>
-<div style={{ flex: 1 }}>
+
+
+
+<div style={{
+  flex: 1,
+  background: "#F3ECE2",
+  padding: "20px"
+}}>
+
+  
+{/* ✅ HEADER (WAITLIST) */}
+  <h2 style={{
+  color: "#1C132D",
+  marginBottom: "10px",
+  textAlign: "center",
+  width: "100%"
+}}>
+  Two Degrees - Waitlist 📋
+</h2>
+
         <div style={{ position: "relative", marginTop: "10px" }}>
           <input
             value={search}
@@ -708,9 +727,9 @@ onClick={() => {
   </p>
 )}
 
-        {/* POPUP */}
         
-        {selectedUser && (
+        
+  {selectedUser && (
   <div style={{
     position: "fixed",
     top: 0,
@@ -723,432 +742,64 @@ onClick={() => {
     alignItems: "center",
     zIndex: 1000
   }}>
-
-    {/* MODAL CARD */}
     <div style={{
       background: "#fff",
       padding: "25px",
       borderRadius: "16px",
-      width: "320px",
-      boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
-      
-maxHeight: "90vh",
-  overflowY: "auto",
-  scrollbarWidth: "thin"
-
+      width: "320px"
     }}>
-
-      {/* NAME */}
-      <h2 style={{
-        marginBottom: "5px",
-        color: "#1C132D"
-      }}>
+      <h2>
         {selectedUser.firstName} {selectedUser.lastName}
       </h2>
 
-      {/* EMAIL */}
-      <p style={{ color: "#333", marginBottom: "10px" }}>
-        {selectedUser.email}
-      </p>
+      <p>{selectedUser.email}</p>
 
-      <hr style={{ margin: "10px 0" }} />
-
-      {/* DETAILS */}
-{isEditing ? (
-  
-<div style={{
-  marginTop: "10px",
-  display: "flex",
-  flexDirection: "column",
-  gap: "10px"
-}}>
-
-
-    <label style={{
-  fontWeight: "600",
-  fontSize: "15px",
-  color: "#333"
-}}>
-  First Name:
-</label>
-    
-<input
-  style={{
-    padding: "8px",
-    borderRadius: "6px",
-    border: "1px solid #ccc",
-    outline: "none",
-    fontSize: "13px"
-  }}
-  
-
-  onFocus={(e) => e.target.style.border = "1px solid #8C84D9"}
-  onBlur={(e) => e.target.style.border = "1px solid #ccc"}
-  value={editData.firstName || ""}
-  onChange={(e) =>
-    setEditData({ ...editData, firstName: e.target.value })
-  }
-/>
-
-
-
-    <label style={{
-  fontWeight: "600",
-  fontSize: "15px",
-  color: "#333",
-  marginBottom: "3px"
-}}>
-  Last Name:
-</label>
-    
-<input
-  style={{
-    padding: "8px",
-    borderRadius: "6px",
-    border: "1px solid #ccc",
-    outline: "none",
-    fontSize: "13px"
-  }}
-  
-
-  onFocus={(e) => e.target.style.border = "1px solid #8C84D9"}
-  onBlur={(e) => e.target.style.border = "1px solid #ccc"}
-  value={editData.lastName || ""}
-  onChange={(e) =>
-    setEditData({ ...editData, lastName: e.target.value })
-  }
-/>
-
-
-
-    <label style={{
-  fontWeight: "600",
-  fontSize: "15px",
-  color: "#333",
-  marginBottom: "3px"
-}}>
-  Email:
-</label>
-    
-<input
-  style={{
-    padding: "8px",
-    borderRadius: "6px",
-    border: "1px solid #ccc",
-    outline: "none",
-    fontSize: "13px"
-  }}
-  
-
-  onFocus={(e) => e.target.style.border = "1px solid #8C84D9"}
-  onBlur={(e) => e.target.style.border = "1px solid #ccc"}
-  value={editData.email || ""}
-  onChange={(e) =>
-    setEditData({ ...editData, email: e.target.value })
-  }
-/>
-
-
-
-    <label style={{
-  fontWeight: "600",
-  fontSize: "15px",
-  color: "#333",
-  marginBottom: "3px"
-}}>
-  Location:
-</label>
-    
-<input
-  style={{
-    padding: "8px",
-    borderRadius: "6px",
-    border: "1px solid #ccc",
-    outline: "none",
-    fontSize: "13px"
-  }}
-  
-
-  onFocus={(e) => e.target.style.border = "1px solid #8C84D9"}
-  onBlur={(e) => e.target.style.border = "1px solid #ccc"}
-  value={editData.location || ""}
-  onChange={(e) =>
-    setEditData({ ...editData, location: e.target.value })
-  }
-/>
-
-
-
-    <label style={{
-  fontWeight: "600",
-  fontSize: "15px",
-  color: "#333",
-  marginBottom: "3px"
-}}>
-  Social:
-</label>
-
-<input
-  style={{
-    padding: "8px",
-    borderRadius: "6px",
-    border: "1px solid #ccc",
-    outline: "none",
-    fontSize: "13px"
-  }}
-  
-
-  onFocus={(e) => e.target.style.border = "1px solid #8C84D9"}
-  onBlur={(e) => e.target.style.border = "1px solid #ccc"}
-  value={editData.social || ""}
-  onChange={(e) =>
-    setEditData({ ...editData, social: e.target.value })
-  }
-/>
-
-
-
-<label style={{
-  fontWeight: "600",
-  fontSize: "15px",
-  color: "#333",
-  marginBottom: "3px"
-}}>
-  Background:
-</label>
-
-<input
-  style={{
-    padding: "8px",
-    borderRadius: "6px",
-    border: "1px solid #ccc",
-    outline: "none",
-    fontSize: "13px"
-  }}
-  
-
-  onFocus={(e) => e.target.style.border = "1px solid #8C84D9"}
-  onBlur={(e) => e.target.style.border = "1px solid #ccc"}
-  value={editData.background || ""}
-  onChange={(e) =>
-    setEditData({ ...editData, background: e.target.value })
-  }
-/>
-
-
-
-<label style={{
-  fontWeight: "600",
-  fontSize: "15px",
-  color: "#333",
-  marginBottom: "3px"
-}}>
-  Website:
-</label>
-
-<input
-  style={{
-    padding: "8px",
-    borderRadius: "6px",
-    border: "1px solid #ccc",
-    outline: "none",
-    fontSize: "13px"
-  }}
-  
-
-  onFocus={(e) => e.target.style.border = "1px solid #8C84D9"}
-  onBlur={(e) => e.target.style.border = "1px solid #ccc"}
-  value={editData.website || ""}
-  onChange={(e) =>
-    setEditData({ ...editData, website: e.target.value })
-  }
-/>
-
-
-
-<label style={{
-  fontWeight: "600",
-  fontSize: "15px",
-  color: "#333",
-  marginBottom: "3px"
-}}>
-  Status:
-</label>
-
-<input
-  style={{
-    padding: "8px",
-    borderRadius: "6px",
-    border: "1px solid #ccc",
-    outline: "none",
-    fontSize: "13px"
-  }}
-  
-
-  onFocus={(e) => e.target.style.border = "1px solid #8C84D9"}
-  onBlur={(e) => e.target.style.border = "1px solid #ccc"}
-  value={editData.nextStep || ""}
-  onChange={(e) =>
-    setEditData({ ...editData, nextStep: e.target.value })
-  }
-/>
-
-
-
-  </div>
-) : (
-
-  <div style={{
-    marginTop: "10px",
-    fontSize: "14px",
-    color: "#333",
-    marginBottom: "3px"
-  }}>
-    <div><b>Location:</b> {selectedUser.location}</div>
-    <div><b>Social:</b> {selectedUser.social}</div>
-    <div><b>Background:</b> {selectedUser.background}</div>
-    <div><b>Website:</b> {selectedUser.website}</div>
-    <div><b>Status:</b> {selectedUser.nextStep}</div>
-  </div>
-)}
-
-
-{!isEditing && (
-  <button
-    onClick={() => {
-      setIsEditing(true);
-      setEditData({ ...selectedUser });
-    }}
-    style={{
-      marginTop: "10px",
-      width: "100%",
-      background: "#FFC774",
-      padding: "10px",
-      borderRadius: "10px",
-      cursor: "pointer"
-    }}
-  >
-    ✏️ Edit
-  </button>
-)}
-
-{isEditing && (
-  <div style={{
-    display: "flex",
-    gap: "10px",
-    marginTop: "10px"
-  }}>
-    
-    <button
-      onClick={saveEdit}
-      style={{
-        flex: 1,
-        background: "#66C6C4",
-        padding: "10px",
-        borderRadius: "10px",
-        border: "none",
-        cursor: "pointer"
-      }}
-    >
-      ✅ Save
-    </button>
-
-    <button
-      onClick={() => {
-        setIsEditing(false);
-        setEditData({});
-      }}
-      style={{
-        flex: 1,
-        background: "#ccc",
-        padding: "10px",
-        borderRadius: "10px",
-        border: "none",
-        cursor: "pointer"
-      }}
-    >
-      ❌ Cancel
-    </button>
-
-  </div>
-)}
-
-
-
-      {/* DELETE */}
-      
-<button
-  onClick={() => {
-    deleteUser(selectedUser);
-    setSelectedUser(null);   
-    setIsEditing(false);     
-  }}
-
-
-        
-        style={{
-          marginTop: "12px",
-          width: "100%",
-          background: "#EF5D41",
-          color: "#fff",
-          border: "none",
-          padding: "10px",
-          borderRadius: "10px",
-          cursor: "pointer"
-        }}
-      >
-        Delete User
-      </button>
-
-      {/* CLOSE */}
-      <button
-        onClick={() => setSelectedUser(null)}
-        style={{
-          marginTop: "8px",
-          width: "100%",
-          background: "#8C84D9",
-          color: "#fff",
-          border: "none",
-          padding: "10px",
-          borderRadius: "10px",
-          cursor: "pointer"
-        }}
-      >
+      <button onClick={() => setSelectedUser(null)}>
         Close
       </button>
-</div>
-    </div>
-  
-)}
-</div>
-      </div>
-</div>
-      {activeEvent && (
-        <div style={{
-          
-position: "fixed",
-top: popupPosition.y,
-left: popupPosition.x,
-transform: "translate(-50%, -50%)",
 
-          background: "#fff",
-          padding: "20px",
-          borderRadius: "12px",
-          boxShadow: "0 4px 15px rgba(0,0,0,0.3)",
-          width: "300px",
-          zIndex: 999
-        }}>
+    </div>
+  </div>
+)}
+
+
+
+{activeEvent && (
+        <div 
+style={{
+  position: "fixed",
+
+  top: Math.min(popupPosition.y, window.innerHeight - 200),  // ✅ prevents going off screen
+  left: Math.min(popupPosition.x, window.innerWidth - 340), // ✅ prevents right overflow
+
+  transform: "translate(-50%, -50%)",
+  background: "#fff",
+  padding: "20px",
+  borderRadius: "12px",
+  boxShadow: "0 4px 15px rgba(0,0,0,0.3)",
+  
+  width: "320px",
+  maxHeight: "80vh",     // ✅ limit height
+  overflowY: "auto",     // ✅ enable scroll
+  
+  zIndex: 999
+}}
+
+>
           <h3>{activeEvent.title}</h3>
           <button
-  onClick={() => {
-    
-setEditEvent({
-  ...activeEvent
-});
+ onClick={() => {
+  setShowAddForm(false); // ✅ close add form
 
-    setShowEditForm(true);
-    setActiveEvent(null);
-  }}
+  setEditEvent({
+    ...activeEvent,
+    status: activeEvent.status || "Idea"
+  });
+
+  setShowEditForm(true);
+  setActiveEvent(null);
+}}
+
   style={{
     marginTop: "10px",
     background: "#FFC774",
@@ -1166,7 +817,7 @@ setEditEvent({
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        id: activeEvent.id
+        id: Number(activeEvent.id)
       })
     });
 
@@ -1186,12 +837,27 @@ setEditEvent({
   🗑️ Delete
 </button>
 
-          <p><b>Status:</b> {activeEvent.status}</p>
-          <p><b>Brand:</b> {activeEvent.brand}</p>
-          <p><b>Niche:</b> {activeEvent.niche}</p>
-          <p><b>Social:</b> {activeEvent.social}</p>
-          <p><b>Contact:</b> {activeEvent.contact}</p>
-          <p><b>Date:</b> {activeEvent.date}</p>
+          <div style={{ marginTop: "10px", display: "flex", flexDirection: "column", gap: "8px" }}>
+
+  <label style={{ fontSize: "12px", color: "#555" }}>Status</label>
+  <input value={activeEvent.status} readOnly style={{ padding: "8px", border: "1px solid #ccc", borderRadius: "6px" }} />
+
+  <label style={{ fontSize: "12px", color: "#555" }}>Brand</label>
+  <input value={activeEvent.brand} readOnly style={{ padding: "8px", border: "1px solid #ccc", borderRadius: "6px" }} />
+
+  <label style={{ fontSize: "12px", color: "#555" }}>Niche</label>
+  <input value={activeEvent.niche} readOnly style={{ padding: "8px", border: "1px solid #ccc", borderRadius: "6px" }} />
+
+  <label style={{ fontSize: "12px", color: "#555" }}>Social</label>
+  <input value={activeEvent.social} readOnly style={{ padding: "8px", border: "1px solid #ccc", borderRadius: "6px" }} />
+
+  <label style={{ fontSize: "12px", color: "#555" }}>Contact</label>
+  <input value={activeEvent.contact} readOnly style={{ padding: "8px", border: "1px solid #ccc", borderRadius: "6px" }} />
+
+  <label style={{ fontSize: "12px", color: "#555" }}>Date</label>
+  <input value={activeEvent.date} readOnly style={{ padding: "8px", border: "1px solid #ccc", borderRadius: "6px" }} />
+
+</div>
 
           <button
             onClick={() => setActiveEvent(null)}
@@ -1227,7 +893,7 @@ setEditEvent({
     <h3>Add Event</h3>
 
     <input
-      placeholder="Title"
+      placeholder="Name"
       value={newEventTitle}
       onChange={(e) => setNewEventTitle(e.target.value)}
       style={{ width: "100%", marginTop: "8px", padding: "8px" }}
@@ -1260,53 +926,105 @@ setEditEvent({
       onChange={(e) => setContact(e.target.value)}
       style={{ width: "100%", marginTop: "8px", padding: "8px" }}
     />
+    <select
+  value={status}
+  onChange={(e) => setStatus(e.target.value)}
+  style={{ width: "100%", marginTop: "8px", padding: "8px" }}
+>
+  <option value="">Select Status</option>
+  <option value="Idea">Idea</option>
+  <option value="Completed">Completed</option>
+  <option value="Confirmed">Confirmed</option>
+  <option value="Outreach">Outreach</option>
+</select>
 
     <button
-      onClick={async () => {
-        if (!selectedDay || !newEventTitle) return;
+  type="button"
+  onClick={async () => {
+    console.log("CLICK SAVE HIT ✅");
 
-        const date = `2026-06-${selectedDay
-          .toString()
-          .padStart(2, "0")}`;
+    if (!newEventTitle) {
+  alert("No title!");
+  return;
+}
+if (!status) {
+  alert("Select a status first!");
+  return;
+}
 
-        await fetch("/api/monday", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: newEventTitle,
-            date,
-            group: selectedGroup,
-            brand,
-            niche,
-            social,
-            contact
-          })
-        });
+    const date = `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}-${String(selectedDay).padStart(2, "0")}`;
 
-        await fetchMonday();
-        setShowAddForm(false);
-      }}
-      style={{
-        marginTop: "10px",
-        background: "#66C6C4",
-        padding: "10px",
-        width: "100%"
-      }}
-    >
-      ✅ Save
-    </button>
+await fetch("/api/monday", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    name: newEventTitle,
+    date,
+    group: getGroupFromStatus(status),
+    brand,
+    niche,
+    social,
+    contact,
+    status
+  })
+});
 
-    <button
-      onClick={() => setShowAddForm(false)}
-      style={{
-        marginTop: "5px",
-        background: "#ccc",
-        padding: "8px",
-        width: "100%"
-      }}
-    >
-      Cancel
-    </button>
+    console.log("FETCH SENT ✅");
+
+    await fetchMonday();
+
+setNewEventTitle("");
+setBrand("");
+setNiche("");
+setSocial("");
+setContact("");
+setStatus("");
+
+setShowAddForm(false); 
+  }}
+  style={{
+    marginTop: "10px",
+    background: "#5FB3B3",
+    padding: "10px",
+    width: "100%",
+    cursor: "pointer"
+  }}
+>
+  ✅ Save
+</button>
+
+    
+<button
+  onClick={() => {
+    setShowAddForm(false);
+    setNewEventTitle("");
+    setBrand("");
+    setNiche("");
+    setSocial("");
+    setContact("");
+    setStatus("");
+  }}
+  style={{
+    marginTop: "8px",
+    background: "#eee",
+    color: "#333",
+    padding: "10px",
+    width: "100%",
+    borderRadius: "8px",
+    border: "none",
+    cursor: "pointer",
+    fontWeight: "500"
+  }}
+  onMouseEnter={(e) =>
+    (e.currentTarget.style.background = "#ddd")
+  }
+  onMouseLeave={(e) =>
+    (e.currentTarget.style.background = "#eee")
+  }
+>
+  ❌ Cancel
+</button>
+
   </div>
 )}
 
@@ -1322,73 +1040,167 @@ setEditEvent({
       borderRadius: "12px",
       boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
       width: "300px",
+      pointerEvents: "auto",
       zIndex: 1000
     }}
   >
     <h3>Edit Event</h3>
 
-    <input
-      value={editEvent?.title || ""}
-      onChange={(e) =>
-        setEditEvent({ ...editEvent, title: e.target.value })
-      }
-      style={{ width: "100%", marginTop: "8px", padding: "8px" }}
-    />
+    {/* NAME */}
+<div style={{ marginTop: "10px" }}>
+  <label style={{ fontSize: "12px", color: "#555" }}>Name</label>
+  <input
+    value={editEvent?.title || ""}
+    onChange={(e) =>
+      setEditEvent({ ...editEvent, title: e.target.value })
+    }
+    
+style={{
+  width: "100%",
+  padding: "8px",
+  marginTop: "4px",
+  border: "1px solid #ccc",
+  borderRadius: "6px"
+}}
 
-    <input
-      value={editEvent?.brand || ""}
-      onChange={(e) =>
-        setEditEvent({ ...editEvent, brand: e.target.value })
-      }
-      style={{ width: "100%", marginTop: "8px", padding: "8px" }}
-    />
+  />
+</div>
 
-    <input
-      value={editEvent?.niche || ""}
-      onChange={(e) =>
-        setEditEvent({ ...editEvent, niche: e.target.value })
-      }
-      style={{ width: "100%", marginTop: "8px", padding: "8px" }}
-    />
+{/* BRAND */}
+<div style={{ marginTop: "10px" }}>
+  <label style={{ fontSize: "12px", color: "#555" }}>Brand</label>
+  <input
+    value={editEvent?.brand || ""}
+    onChange={(e) =>
+      setEditEvent({ ...editEvent, brand: e.target.value })
+    }
+    
+style={{
+  width: "100%",
+  padding: "8px",
+  marginTop: "4px",
+  border: "1px solid #ccc",
+  borderRadius: "6px"
+}}
 
-    <input
-      value={editEvent?.social || ""}
-      onChange={(e) =>
-        setEditEvent({ ...editEvent, social: e.target.value })
-      }
-      style={{ width: "100%", marginTop: "8px", padding: "8px" }}
-    />
+  />
+</div>
 
-    <input
-      value={editEvent?.contact || ""}
-      onChange={(e) =>
-        setEditEvent({ ...editEvent, contact: e.target.value })
-      }
-      style={{ width: "100%", marginTop: "8px", padding: "8px" }}
-    />
+{/* NICHE */}
+<div style={{ marginTop: "10px" }}>
+  <label style={{ fontSize: "12px", color: "#555" }}>Niche</label>
+  <input
+    value={editEvent?.niche || ""}
+    onChange={(e) =>
+      setEditEvent({ ...editEvent, niche: e.target.value })
+    }
+    
+style={{
+  width: "100%",
+  padding: "8px",
+  marginTop: "4px",
+  border: "1px solid #ccc",
+  borderRadius: "6px"
+}}
+
+  />
+</div>
+
+{/* SOCIAL */}
+<div style={{ marginTop: "10px" }}>
+  <label style={{ fontSize: "12px", color: "#555" }}>Social</label>
+  <input
+    value={editEvent?.social || ""}
+    onChange={(e) =>
+      setEditEvent({ ...editEvent, social: e.target.value })
+    }
+    
+style={{
+  width: "100%",
+  padding: "8px",
+  marginTop: "4px",
+  border: "1px solid #ccc",
+  borderRadius: "6px"
+}}
+
+  />
+</div>
+
+{/* CONTACT */}
+<div style={{ marginTop: "10px" }}>
+  <label style={{ fontSize: "12px", color: "#555" }}>Contact</label>
+  <input
+    value={editEvent?.contact || ""}
+    onChange={(e) =>
+      setEditEvent({ ...editEvent, contact: e.target.value })
+    }
+    
+style={{
+  width: "100%",
+  padding: "8px",
+  marginTop: "4px",
+  border: "1px solid #ccc",
+  borderRadius: "6px"
+}}
+
+  />
+</div>
+{/* STATUS */}
+<div style={{ marginTop: "10px" }}>
+  <label style={{ fontSize: "12px", color: "#555" }}>Status</label>
+  <select
+  value={editEvent?.status || "Idea"}
+    onChange={(e) =>
+      setEditEvent({ ...editEvent, status: e.target.value })
+    }
+    style={{
+      width: "100%",
+      padding: "10px",
+      marginTop: "4px",
+      border: "1px solid #ddd",
+      borderRadius: "8px"
+    }}
+  >
+    <option value="">Select Status</option>
+    <option value="Idea">Idea</option>
+    <option value="Outreach">Outreach</option>
+    <option value="Confirmed">Confirmed</option>
+    <option value="Completed">Completed</option>
+  </select>
+</div>
+
 
     <button
       onClick={async () => {
-        await fetch("/api/monday", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            id: editEvent.id,
-            title: editEvent.title,
-            brand: editEvent.brand,
-            niche: editEvent.niche,
-            social: editEvent.social,
-            contact: editEvent.contact
-          })
-        });
+  console.log("EDIT DATA:", editEvent);
 
-        await fetchMonday();
-        setShowEditForm(false);
-        setEditEvent(null);
-      }}
+  if (!editEvent?.title) {
+    alert("No title!");
+    return;
+  }
+
+ await fetch("/api/monday", {
+  method: "PUT",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+  id: editEvent.id,
+  newTitle: editEvent.title,
+  status: editEvent.status || "Idea",
+  brand: editEvent.brand,
+  niche: editEvent.niche,
+  social: editEvent.social,
+  contact: editEvent.contact
+})
+});
+
+  await fetchMonday();
+
+  setShowEditForm(false);
+  setEditEvent(null);
+}}
       style={{
         marginTop: "10px",
-        background: "#66C6C4",
+        background: "#5FB3B3",
         padding: "10px",
         width: "100%"
       }}
@@ -1403,21 +1215,29 @@ setEditEvent({
     setEditEvent(null);
   }}
   style={{
-    marginTop: "5px",
-    background: "#ccc",
-    padding: "8px",
-    width: "100%"
+    marginTop: "8px",
+    background: "#eee",
+    color: "#333",
+    padding: "10px",
+    width: "100%",
+    borderRadius: "8px",
+    border: "none",
+    cursor: "pointer"
   }}
+  onMouseEnter={(e) =>
+    (e.currentTarget.style.background = "#ddd")
+  }
+  onMouseLeave={(e) =>
+    (e.currentTarget.style.background = "#eee")
+  }
 >
-  Cancel
+  ❌ Cancel
 </button>
 
-
-
-</div> 
-
+</div>
 )}
+</div>
+</div>
 
-</div> 
 );
 }
