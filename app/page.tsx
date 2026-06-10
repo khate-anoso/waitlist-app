@@ -338,6 +338,7 @@ onClick={() => {
 
 <div style={{
   display: "flex",
+  flexDirection: "column",
   gap: "20px",
   padding: "20px",
   background: "#F3ECE2",
@@ -519,9 +520,8 @@ setActiveEvent(event);
 
 {/* ✅ WAITLIST BELOW CALENDAR */}
 <div style={{
-  marginTop: "40px",
-  display: "flex",
-  justifyContent: "center"
+  marginTop: "20px",
+  width: "100%"
 }}>
 
   <div style={{
