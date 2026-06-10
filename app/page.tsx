@@ -517,6 +517,52 @@ setActiveEvent(event);
 
 
 
+{/* ✅ WAITLIST BELOW CALENDAR */}
+<div style={{ marginTop: "40px", width: "100%", padding: "20px" }}>
+
+  <h2 style={{
+    textAlign: "center",
+    color: "#1C132D",
+    marginBottom: "15px"
+  }}>
+    Two Degrees - Waitlist 📋
+  </h2>
+
+  {/* SEARCH */}
+  <input
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+    placeholder="Search..."
+    style={{
+      width: "100%",
+      padding: "10px",
+      borderRadius: "8px",
+      border: "1px solid #ccc"
+    }}
+  />
+
+  {/* LIST */}
+  <div style={{ marginTop: "20px" }}>
+    {filteredUsers.map((user, index) => (
+      <div
+        key={index}
+        onClick={() => setSelectedUser(user)}
+        style={{
+          background: "#fff",
+          padding: "12px",
+          marginBottom: "10px",
+          borderRadius: "10px",
+          cursor: "pointer"
+        }}
+      >
+        <b>
+          {index + 1}. {user.firstName} {user.lastName}
+        </b>
+      </div>
+    ))}
+  </div>
+
+</div>
 
 
         
