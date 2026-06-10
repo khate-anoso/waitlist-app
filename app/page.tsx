@@ -521,54 +521,69 @@ setActiveEvent(event);
 
         
         
-<div style={{
-  background: "#fff",
-  padding: "25px",
-  borderRadius: "16px",
-  width: "340px",
-  boxShadow: "0 4px 20px rgba(0,0,0,0.3)"
-}}>
+{selectedUser && (
+  <div style={{
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    background: "rgba(0,0,0,0.5)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1000
+  }}>
+    <div style={{
+      background: "#fff",
+      padding: "25px",
+      borderRadius: "16px",
+      width: "340px",
+      boxShadow: "0 4px 20px rgba(0,0,0,0.3)"
+    }}>
 
-  <h2 style={{ marginBottom: "10px" }}>
-    {selectedUser.firstName} {selectedUser.lastName}
-  </h2>
+      <h2>
+        {selectedUser?.firstName} {selectedUser?.lastName}
+      </h2>
 
-  <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+      <input
+        value={selectedUser?.email || ""}
+        readOnly
+        style={{ width: "100%", marginTop: "10px", padding: "8px" }}
+      />
 
-    <label style={{ fontSize: "12px", color: "#555" }}>Email</label>
-    <input value={selectedUser.email} readOnly
-      style={{ padding: "8px", border: "1px solid #ccc", borderRadius: "6px" }}
-    />
+      <input
+        value={selectedUser?.location || ""}
+        readOnly
+        style={{ width: "100%", marginTop: "10px", padding: "8px" }}
+      />
 
-    <label style={{ fontSize: "12px", color: "#555" }}>Location</label>
-    <input value={selectedUser.location || ""} readOnly
-      style={{ padding: "8px", border: "1px solid #ccc", borderRadius: "6px" }}
-    />
+      <input
+        value={selectedUser?.nextStep || ""}
+        readOnly
+        style={{ width: "100%", marginTop: "10px", padding: "8px" }}
+      />
 
-    <label style={{ fontSize: "12px", color: "#555" }}>Next Step</label>
-    <input value={selectedUser.nextStep || ""} readOnly
-      style={{ padding: "8px", border: "1px solid #ccc", borderRadius: "6px" }}
-    />
+      <button
+        onClick={() => setSelectedUser(null)}
+        style={{
+          marginTop: "15px",
+          background: "#EF5D41",
+          color: "#fff",
+          padding: "10px",
+          width: "100%",
+          borderRadius: "8px"
+        }}
+      >
+        Close
+      </button>
 
+    </div>
   </div>
+)}
 
-  <button
-    onClick={() => setSelectedUser(null)}
-    style={{
-      marginTop: "15px",
-      background: "#EF5D41",
-      color: "#fff",
-      border: "none",
-      padding: "10px",
-      borderRadius: "8px",
-      cursor: "pointer",
-      width: "100%"
-    }}
-  >
-    Close
-  </button>
 
-</div>
+  
 
 
 
