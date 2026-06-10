@@ -263,14 +263,15 @@ return (
   
 
 
-<div 
+<div
   id="background"
-  onClick={(e) => {
-    if ((e.target as HTMLElement).id === "background") {
-      setSelectedDay(null);
-    }
+  style={{
+    display: "flex",
+    justifyContent: "center",  
+    background: "#F3ECE2",
+    minHeight: "100vh",
+    fontFamily: "system-ui"
   }}
-  style={{ display: "flex", minHeight: "100vh", fontFamily: "system-ui" }}
 >
 
 
@@ -339,10 +340,10 @@ onClick={() => {
 <div style={{
   display: "flex",
   flexDirection: "column",
-  gap: "20px",
+  gap: "30px",
   padding: "20px",
-  background: "#F3ECE2",
-  flex: 1
+  width: "100%",
+  maxWidth: "1000px",
 }}>
 
 
@@ -526,7 +527,7 @@ setActiveEvent(event);
 
   <div style={{
     width: "100%",
-    maxWidth: "800px",
+    maxWidth: "700px",
     background: "#fff",
     padding: "20px",
     borderRadius: "16px",
