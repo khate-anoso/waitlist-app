@@ -517,250 +517,58 @@ setActiveEvent(event);
 
 
 
+
+
+        
+        
 <div style={{
-  flex: 1,
-  background: "#F3ECE2",
-  padding: "20px"
+  background: "#fff",
+  padding: "25px",
+  borderRadius: "16px",
+  width: "340px",
+  boxShadow: "0 4px 20px rgba(0,0,0,0.3)"
 }}>
 
-  
-{/* ✅ HEADER (WAITLIST) */}
-  <h2 style={{
-  color: "#1C132D",
-  marginBottom: "10px",
-  textAlign: "center",
-  width: "100%"
-}}>
-  Two Degrees - Waitlist 📋
-</h2>
+  <h2 style={{ marginBottom: "10px" }}>
+    {selectedUser.firstName} {selectedUser.lastName}
+  </h2>
 
-        <div style={{ position: "relative", marginTop: "10px" }}>
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search..."
-            style={{
-              color: "#1C132D",
-              width: "100%",
-              padding: "10px",
-              border: "2px solid #8C84D9",
-              borderRadius: "8px"
-            }}
-          />
+  <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
 
-          {search && (
-            <button
-              onClick={() => setSearch("")}
-              style={{
-                position: "absolute",
-                right: "10px",
-                top: "50%",
-                transform: "translateY(-50%)",
-                cursor: "pointer"
-              }}
-            >
-              ❌
-            </button>
-          )}
-        </div>
+    <label style={{ fontSize: "12px", color: "#555" }}>Email</label>
+    <input value={selectedUser.email} readOnly
+      style={{ padding: "8px", border: "1px solid #ccc", borderRadius: "6px" }}
+    />
 
-        {/* ADD USER FORM */}
-        <div style={{ marginTop: "15px", background: "#fff", padding: "10px", borderRadius: "10px", display: "flex", gap: "10px", alignItems: "center",flexWrap: "wrap"}}>
-          
-<input
-  style={{
-    color: "#1C132D",
-    padding: "8px",
-    flex: "1 1 45%",
-    borderRadius: "6px",
-    border: "1px solid #ccc",
-    outline: "none",
-    fontSize: "13px",
-    transition: "0.2s"
-  }}
-  onMouseEnter={(e) =>
-    (e.currentTarget.style.border = "1px solid #8C84D9")
-  }
-  onMouseLeave={(e) =>
-    (e.currentTarget.style.border = "1px solid #ccc")
-  }
-  onFocus={(e) =>
-    (e.currentTarget.style.border = "1px solid #8C84D9")
-  }
-  onBlur={(e) =>
-    (e.currentTarget.style.border = "1px solid #ccc")
-  }
- placeholder="First Name" value={newUser.firstName} onChange={(e) => setNewUser({ ...newUser, firstName: e.target.value })} />
-          
-<input
-  style={{
-    color: "#1C132D",
-    padding: "8px",
-    flex: "1 1 45%",
-    borderRadius: "6px",
-    border: "1px solid #ccc",
-    outline: "none",
-    fontSize: "13px",
-    transition: "0.2s"
-  }}
-  onMouseEnter={(e) =>
-    (e.currentTarget.style.border = "1px solid #8C84D9")
-  }
-  onMouseLeave={(e) =>
-    (e.currentTarget.style.border = "1px solid #ccc")
-  }
-  onFocus={(e) =>
-    (e.currentTarget.style.border = "1px solid #8C84D9")
-  }
-  onBlur={(e) =>
-    (e.currentTarget.style.border = "1px solid #ccc")
-  }
- placeholder="Last Name" value={newUser.lastName} onChange={(e) => setNewUser({ ...newUser, lastName: e.target.value })} />
-          
-<input
-  style={{
-    color: "#1C132D",
-    padding: "8px",
-    flex: "1 1 100%",
-    borderRadius: "6px",
-    border: "1px solid #ccc",
-    outline: "none",
-    fontSize: "13px",
-    transition: "0.2s"
-  }}
-  onMouseEnter={(e) =>
-    (e.currentTarget.style.border = "1px solid #8C84D9")
-  }
-  onMouseLeave={(e) =>
-    (e.currentTarget.style.border = "1px solid #ccc")
-  }
-  onFocus={(e) =>
-    (e.currentTarget.style.border = "1px solid #8C84D9")
-  }
-  onBlur={(e) =>
-    (e.currentTarget.style.border = "1px solid #ccc")
-  }
- placeholder="Email" value={newUser.email} onChange={(e) => setNewUser({ ...newUser, email: e.target.value })} />
-          
+    <label style={{ fontSize: "12px", color: "#555" }}>Location</label>
+    <input value={selectedUser.location || ""} readOnly
+      style={{ padding: "8px", border: "1px solid #ccc", borderRadius: "6px" }}
+    />
 
-          <button onClick={addUser} 
-          
-onMouseEnter={(e) =>
-    (e.currentTarget.style.background = "#d94f34")
-  }
-  onMouseLeave={(e) =>
-    (e.currentTarget.style.background = "#EF5D41")
-  }
+    <label style={{ fontSize: "12px", color: "#555" }}>Next Step</label>
+    <input value={selectedUser.nextStep || ""} readOnly
+      style={{ padding: "8px", border: "1px solid #ccc", borderRadius: "6px" }}
+    />
 
-          
-
-
-
-style={{
-  flex: "1 1 100%",
-  background: "#EF5D41",
-  color: "#fff",
-  padding: "10px",
-  borderRadius: "8px",
-  border: "none",
-  cursor: "pointer"
-}}
-
->
-            ADD
-          </button>
-        </div>
-
-        {/* LIST */}
-        {filteredUsers.map((user, index) => (
-          
-<div
-  key={index}
-  ref={(el) => {
-    const firstLetter = user.firstName?.charAt(0).toUpperCase();
-    if (el && !letterRefs.current[firstLetter]) {
-      letterRefs.current[firstLetter] = el;
-    }
-  }}
-
-            
-onClick={() => {
-  setSelectedUser(user);
-  setIsEditing(false);
-  setEditData({});
-}}
-
-            style={{
-              background: "#fff",
-              marginTop: "10px",
-              padding: "12px",
-              borderRadius: "10px",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
-              borderLeft: `6px solid ${
-                user.nextStep === "Approved"
-                  ? "#66C6C4"
-                  : user.nextStep === "Interview"
-                  ? "#FFC774"
-                  : "#EF5D41"
-              }`
-            }}
-          >
-            
-<b style={{ color: "#1C132D" }}>
-  {index + 1}. {user.firstName} {user.lastName}
-</b>
-
-
-
-
-            
-<div style={{ fontSize: "12px", color: "#333" }}>
-  {user.location}
-</div>
-
-          </div>
-        ))}
-
-{filteredUsers.length === 0 && (
-  <p style={{ marginTop: "20px", textAlign: "center", color: "#444" }}>
-    No users found
-  </p>
-)}
-
-        
-        
-  {selectedUser && (
-  <div style={{
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    background: "rgba(0,0,0,0.5)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 1000
-  }}>
-    <div style={{
-      background: "#fff",
-      padding: "25px",
-      borderRadius: "16px",
-      width: "320px"
-    }}>
-      <h2>
-        {selectedUser.firstName} {selectedUser.lastName}
-      </h2>
-
-      <p>{selectedUser.email}</p>
-
-      <button onClick={() => setSelectedUser(null)}>
-        Close
-      </button>
-
-    </div>
   </div>
-)}
+
+  <button
+    onClick={() => setSelectedUser(null)}
+    style={{
+      marginTop: "15px",
+      background: "#EF5D41",
+      color: "#fff",
+      border: "none",
+      padding: "10px",
+      borderRadius: "8px",
+      cursor: "pointer",
+      width: "100%"
+    }}
+  >
+    Close
+  </button>
+
+</div>
 
 
 
