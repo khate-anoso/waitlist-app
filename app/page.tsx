@@ -518,51 +518,79 @@ setActiveEvent(event);
 
 
 {/* ✅ WAITLIST BELOW CALENDAR */}
-<div style={{ marginTop: "40px", width: "100%", padding: "20px" }}>
+<div style={{
+  marginTop: "40px",
+  display: "flex",
+  justifyContent: "center"
+}}>
 
-  <h2 style={{
-    textAlign: "center",
-    color: "#1C132D",
-    marginBottom: "15px"
+  <div style={{
+    width: "100%",
+    maxWidth: "800px",
+    background: "#fff",
+    padding: "20px",
+    borderRadius: "16px",
+    boxShadow: "0 4px 20px rgba(0,0,0,0.1)"
   }}>
-    Two Degrees - Waitlist 📋
-  </h2>
 
-  {/* SEARCH */}
-  <input
-    value={search}
-    onChange={(e) => setSearch(e.target.value)}
-    placeholder="Search..."
-    style={{
-      width: "100%",
-      padding: "10px",
-      borderRadius: "8px",
-      border: "1px solid #ccc"
-    }}
-  />
+    <h2 style={{
+      textAlign: "center",
+      color: "#1C132D",
+      marginBottom: "15px"
+    }}>
+      Two Degrees - Waitlist 📋
+    </h2>
 
-  {/* LIST */}
-  <div style={{ marginTop: "20px" }}>
-    {filteredUsers.map((user, index) => (
-      <div
-        key={index}
-        onClick={() => setSelectedUser(user)}
-        style={{
-          background: "#fff",
-          padding: "12px",
-          marginBottom: "10px",
-          borderRadius: "10px",
-          cursor: "pointer"
-        }}
-      >
-        <b>
-          {index + 1}. {user.firstName} {user.lastName}
-        </b>
-      </div>
-    ))}
+    {/* SEARCH */}
+    <input
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      placeholder="Search..."
+      style={{
+        width: "100%",
+        padding: "10px",
+        borderRadius: "8px",
+        border: "1px solid #ccc"
+      }}
+    />
+
+    {/* LIST */}
+    <div style={{ marginTop: "20px" }}>
+      {filteredUsers.map((user, index) => (
+        <div
+          key={index}
+          onClick={() => setSelectedUser(user)}
+          style={{
+            background: "#F9F9F9",
+            padding: "12px",
+            marginBottom: "10px",
+            borderRadius: "10px",
+            cursor: "pointer",
+            transition: "0.2s"
+          }}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.background = "#EFE7FF")
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.background = "#F9F9F9")
+          }
+        >
+          <b>
+            {index + 1}. {user.firstName} {user.lastName}
+          </b>
+        </div>
+      ))}
+    </div>
+
+    {filteredUsers.length === 0 && (
+      <p style={{ textAlign: "center", marginTop: "20px" }}>
+        No users found
+      </p>
+    )}
+
   </div>
-
 </div>
+
 
 
         
