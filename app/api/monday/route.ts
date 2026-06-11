@@ -9,7 +9,13 @@ export async function GET() {
       query: `
   {
     boards(ids: 18412930770) {
-      items_page(limit: 100) {
+
+  groups {
+    id
+    title
+  }
+
+  items_page(limit: 100) {
         items {
           id
           name
@@ -90,12 +96,16 @@ export async function PUT(req: Request) {
     const safeTitle = newTitle.replace(/"/g, '\\"');
 
     // ✅ status → group mapping
-    const groupMap: any = {
-      Idea: "topics",
-      Outreach: "group_mm3ahc7c",
-      Confirmed: "group_mm3a2tx5",
-      Completed: "group_mm3an27k"
-    };
+    
+    
+const groupMap: any = {
+  Idea: "topics",
+  Outreach: "group_mm3ahc7c",
+  Confirmed: "group_mm3a2tx5",
+  "Online Interview": "group_mm3manga3",
+  Completed: "group_mm3an27k"
+};
+
 
     const newGroup = groupMap[status] || "topics";
 
