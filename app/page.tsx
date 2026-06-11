@@ -334,7 +334,7 @@ return (
   gap: "40px",
   padding: "20px",
   width: "100%",
-  maxWidth: "1000px",
+  maxWidth: isMobile ? "100%" : "1000px",
 }}>
 
 
@@ -376,9 +376,9 @@ flexWrap: "wrap"
 >
   <div style={{
   display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  marginBottom: "10px"
+justifyContent: isMobile ? "center" : "space-between",
+alignItems: "center",
+gap: "10px"
 }}>
   <button onClick={() => setCurrentMonth(prev => prev - 1)}>
     ⬅️
@@ -408,6 +408,7 @@ flexWrap: "wrap"
     borderRadius: "8px",
     border: "none",
     cursor: "pointer",
+    width: isMobile ? "100%" : "auto",
     fontSize: "13px"
   }}
 >
@@ -435,6 +436,7 @@ transition: "0.2s",
       border: "none",
       cursor: "pointer",
       fontSize: "13px",
+      width: isMobile ? "100%" : "auto",
       fontWeight: "500"
     }}
     onMouseEnter={(e) =>
@@ -456,7 +458,7 @@ onMouseLeave={(e) =>
 
   style={{
     display: "grid",
-    gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(7, 1fr)",
+    gridTemplateColumns: isMobile ? "repeat(3, 1fr)" : "repeat(7, 1fr)",
     gap: "8px",
     marginTop: "10px",
     fontWeight: "600",
@@ -872,7 +874,7 @@ onMouseLeave={(e) => {
   background: "#fff",
   padding: "28px",
   borderRadius: "18px",
-  width: "450px",                 // ✅ wider
+  width: isMobile ? "90%" : "450px",
   boxShadow: "0 10px 30px rgba(0,0,0,0.25)"
 }}>
 
@@ -979,7 +981,7 @@ transform: "translate(-50%, -50%)",
   padding: "20px",
   borderRadius: "12px",
   boxShadow: "0 4px 15px rgba(0,0,0,0.3)",
-  width: "320px",
+  width: isMobile ? "90%" : "320px",
   maxHeight: "80vh",
   overflowY: "auto",  
   zIndex: 999
@@ -1087,7 +1089,7 @@ transform: "translate(-50%, -50%)",
       padding: "20px",
       borderRadius: "12px",
       boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
-      width: "300px",
+      width: isMobile ? "90%" : "300px",
       zIndex: 1000
     }}
   >
