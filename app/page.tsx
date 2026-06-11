@@ -56,7 +56,18 @@ const getGroupFromStatus = (status: string) => {
   return "topics";
 };
 
+const [isMobile, setIsMobile] = useState(false);
 
+useEffect(() => {
+  const handleResize = () => {
+    setIsMobile(window.innerWidth < 768);
+  };
+
+  handleResize();
+  window.addEventListener("resize", handleResize);
+
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
 const fetchMonday = async () => {
   const res = await fetch("/api/monday");
   const data = await res.json();
@@ -356,9 +367,11 @@ return (
   <div
   style={{
     display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: "30px"
+flexDirection: isMobile ? "column" : "row",
+gap: isMobile ? "10px" : "0",
+alignItems: isMobile ? "stretch" : "center",
+justifyContent: "space-between",
+flexWrap: "wrap"
   }}
 >
   <div style={{
@@ -371,7 +384,13 @@ return (
     ⬅️
   </button>
 
-  <h2 style={{ margin: 0 }}>
+  
+<h2 style={{ 
+  margin: 0,
+  fontSize: isMobile ? "16px" : "20px",
+  textAlign: isMobile ? "center" : "left"
+}}>
+
     📅 {new Date(currentYear, currentMonth).toLocaleString("default", { month: "long" })} {currentYear}
   </h2>
 
@@ -437,7 +456,7 @@ onMouseLeave={(e) =>
 
   style={{
     display: "grid",
-    gridTemplateColumns: "repeat(7, 1fr)",
+    gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(7, 1fr)",
     gap: "8px",
     marginTop: "10px",
     fontWeight: "600",
@@ -483,7 +502,7 @@ setSelectedDay(day);
     ? "2px solid #8C84D9"           // ✅ strong border
     : "1px solid #eee",
 
-  minHeight: "90px",
+  minHeight: isMobile ? "120px" : "90px",
   padding: "10px",
   borderRadius: "12px",
   boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
@@ -524,11 +543,14 @@ setActiveEvent(event);
     style={{
       marginTop: "3px",
       background: getStatusColor(event.status),
-padding: "4px 6px",
+
 fontWeight: "500",
       color: "#fff",
       borderRadius: "4px",
-      fontSize: "10px",
+      
+fontSize: isMobile ? "12px" : "10px",
+padding: isMobile ? "6px 8px" : "4px 6px",
+
       cursor: "pointer"
     }}
   >
@@ -1165,8 +1187,7 @@ if (status === "Confirmed") {
 
   const subject = encodeURIComponent(newEventTitle);
 
-  const outlookUrl = `https://outlook.office.com/calendar/0/deeplink/compose?subject=${subject}&startdt=${start}&enddt=${end}&to=${attendees}`;
-
+ const outlookUrl = `https://outlook.office.com/calendar/0/deeplink/compose?subject=${subject}&startdt=${start}&enddt=${end}&to=${attendees}`;
   window.open(outlookUrl, "_blank");
 }
 
