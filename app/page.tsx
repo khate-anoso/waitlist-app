@@ -332,9 +332,9 @@ return (
   display: "flex",
   flexDirection: "column",
   gap: "40px",
-  padding: "20px",
   width: "100%",
-  maxWidth: isMobile ? "100%" : "1000px",
+  maxWidth: "100%",
+  padding: isMobile ? "10px" : "20px",
 }}>
 
 
@@ -352,6 +352,7 @@ return (
   padding: "20px",
   borderRadius: "20px",
   boxShadow: "0 15px 40px rgba(0,0,0,0.08)",
+  width: "100%",
 }}>
   
 <h2 style={{
@@ -401,16 +402,16 @@ gap: "10px"
 <button
   onClick={() => setView(view === "calendar" ? "kanban" : "calendar")}
   style={{
-    marginLeft: "10px",
-    background: "#1C132D",
-    color: "#fff",
-    padding: "8px 14px",
-    borderRadius: "8px",
-    border: "none",
-    cursor: "pointer",
-    width: isMobile ? "100%" : "auto",
-    fontSize: "13px"
-  }}
+  marginLeft: 0,
+  background: "#1C132D",
+  color: "#fff",
+  padding: "8px 14px",
+  borderRadius: "8px",
+  border: "none",
+  cursor: "pointer",
+  fontSize: "13px",
+  width: isMobile ? "100%" : "auto"
+}}
 >
   {view === "calendar" ? "📊 Kanban" : "📅 Calendar"}
 </button>
@@ -426,19 +427,21 @@ gap: "10px"
   setShowAddForm(true);
 }}
 
-    style={{
-      background: "linear-gradient(135deg, #EF5D41, #D94C32)", // ✅ ORANGE BRAND
-boxShadow: "0 6px 16px rgba(239, 93, 65, 0.3), 0 4px 12px rgba(0,0,0,0.15)",
-transition: "0.2s",
-      color: "#fff",
-      padding: "8px 14px",
-      borderRadius: "8px",
-      border: "none",
-      cursor: "pointer",
-      fontSize: "13px",
-      width: isMobile ? "100%" : "auto",
-      fontWeight: "500"
-    }}
+    
+style={{
+  background: "linear-gradient(135deg, #EF5D41, #D94C32)",
+  boxShadow: "0 6px 16px rgba(239, 93, 65, 0.3), 0 4px 12px rgba(0,0,0,0.15)",
+  transition: "0.2s",
+  color: "#fff",
+  padding: "8px 14px",
+  borderRadius: "8px",
+  border: "none",
+  cursor: "pointer",
+  fontSize: "13px",
+  fontWeight: "500",
+  width: isMobile ? "100%" : "auto"
+}}
+
     onMouseEnter={(e) =>
   (e.currentTarget.style.transform = "scale(1.05)")
 }
@@ -458,10 +461,11 @@ onMouseLeave={(e) =>
 
   style={{
     display: "grid",
-    gridTemplateColumns: isMobile ? "repeat(3, 1fr)" : "repeat(7, 1fr)",
+    gridTemplateColumns: isMobile ? "repeat(3, minmax(0, 1fr))" : "repeat(7, 1fr)",
     gap: "8px",
     marginTop: "10px",
     fontWeight: "600",
+    alignItems: "stretch",
 letterSpacing: "0.3px"
   }}
 >
@@ -504,7 +508,7 @@ setSelectedDay(day);
     ? "2px solid #8C84D9"           // ✅ strong border
     : "1px solid #eee",
 
-  minHeight: isMobile ? "120px" : "90px",
+  minHeight: isMobile ? "100px" : "90px",
   padding: "10px",
   borderRadius: "12px",
   boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
