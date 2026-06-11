@@ -523,7 +523,6 @@ setActiveEvent(event);
 
     style={{
       marginTop: "3px",
-      padding: "2px 4px",
       background: getStatusColor(event.status),
 padding: "4px 6px",
 fontWeight: "500",
