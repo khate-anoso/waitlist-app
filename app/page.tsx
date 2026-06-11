@@ -727,7 +727,7 @@ fontSize: isMobile ? "14px" : "16px",
         transform: "translateY(-50%)",
         cursor: "pointer",
         fontSize: "14px",
-        color: "#333"
+        color: "#333",
         fontWeight: "bold"
       }}
     >
