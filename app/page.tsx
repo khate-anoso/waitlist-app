@@ -408,8 +408,7 @@ return (
 
     style={{
       background: "linear-gradient(135deg, #EF5D41, #D94C32)", // ✅ ORANGE BRAND
-boxShadow: "0 6px 16px rgba(239, 93, 65, 0.3)",
-boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+boxShadow: "0 6px 16px rgba(239, 93, 65, 0.3), 0 4px 12px rgba(0,0,0,0.15)",
 transition: "0.2s",
       color: "#fff",
       padding: "8px 14px",
