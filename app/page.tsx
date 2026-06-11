@@ -311,7 +311,9 @@ return (
     justifyContent: "center",  
     background: "linear-gradient(180deg, #F3ECE2, #EAE3D9)",
     minHeight: "100vh",
-    fontFamily: "system-ui"
+fontSize: isMobile ? "14px" : "16px",
+color: "#111",
+    fontFamily: "system-ui",
   }}
 >
 
@@ -550,7 +552,7 @@ setActiveEvent(event);
       marginTop: "3px",
       background: getStatusColor(event.status),
 
-fontWeight: "500",
+fontWeight: "600",
       color: "#fff",
       borderRadius: "4px",
       
@@ -624,7 +626,7 @@ padding: isMobile ? "6px 8px" : "4px 6px",
       border: "1px solid #eee",
       borderRadius: "10px",
       padding: "10px",
-      background: "#fafafa",
+      background: "#ffffff",
       cursor: "pointer",
       boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
       transition: "0.2s"
@@ -641,7 +643,7 @@ padding: isMobile ? "6px 8px" : "4px 6px",
                 <div style={{
                   fontSize: "12px",
                   marginTop: "4px",
-                  color: "#666"
+                  color: "#222"
                 }}>
                   {event.brand}
                 </div>
@@ -708,6 +710,8 @@ padding: isMobile ? "6px 8px" : "4px 6px",
       padding: "12px",
       paddingRight: "35px", // ✅ space for icon
       borderRadius: "10px",
+color: "#111",
+fontSize: isMobile ? "14px" : "16px",
       border: "1px solid #ccc"
     }}
   />
@@ -723,7 +727,7 @@ padding: isMobile ? "6px 8px" : "4px 6px",
         transform: "translateY(-50%)",
         cursor: "pointer",
         fontSize: "14px",
-        color: "#888",
+        color: "#333"
         fontWeight: "bold"
       }}
     >
